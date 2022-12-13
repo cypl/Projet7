@@ -70,7 +70,7 @@ function searchByText(expression){
     let wordsFromExpression = getWordsFromExpression(expression);
     console.log(wordsFromExpression);
     
-    // Pour chaque mot…
+    // Pour chaque mot de la recherche…
     for(let word of wordsFromExpression){
         console.log("* " + word);
         // …on recherche dans chaque recette :
@@ -91,7 +91,7 @@ function searchByText(expression){
     if(!recipesFromSearch.length){
         printMessageNoResultsFound(expression);
     }
-    // Afficher toutes les recettes
+    // Pour tester on peut afficher toutes les recettes
     if(expression == "***"){
         recipesFromSearch = recipes;
     }
