@@ -24,9 +24,30 @@
             </form>
         </div>
         <div id="filters" class="content_width">
-          <div id="filter_ingredients" class="filter_item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" class="angle_filter_box"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg><p class="filter_item_label">Ingrédients</p></div>
-          <div id="filter_appliance" class="filter_item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" class="angle_filter_box"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg><p class="filter_item_label">Appareils</p></div>
-          <div id="filter_ustensils" class="filter_item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" class="angle_filter_box"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg><p class="filter_item_label">Ustensiles</p></div>
+          <div id="filter_ingredients" class="filter_item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" class="angle_filter_box"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
+            <p class="filter_item_label">Ingrédients</p>
+            <form class="filter_item_form">
+              <label for="search_ingredient" class="filter_item_form__label">Rechercher un ingrédient</label>
+              <input type="text" id="search_ingredient" class="filter_item_form__input" placeholder="Rechercher un ingrédient">
+            </form>
+          </div>
+          <div id="filter_appliance" class="filter_item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" class="angle_filter_box"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
+            <p class="filter_item_label">Appareils</p>
+            <form class="filter_item_form">
+              <label for="search_appliance" class="filter_item_form__label">Rechercher un appareil</label>
+              <input type="text" id="search_appliance" class="filter_item_form__input" placeholder="Rechercher un appareil">
+            </form>
+          </div>
+          <div id="filter_ustensils" class="filter_item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" class="angle_filter_box"><path d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>
+            <p class="filter_item_label">Ustensiles</p>
+            <form class="filter_item_form">
+              <label for="search_ustensils" class="filter_item_form__label">Rechercher un ustensile</label>
+              <input type="text" id="search_ustensils" class="filter_item_form__input" placeholder="Rechercher un ustensile">
+            </form>
+          </div>
         </div>
         <div id="messages" class="content_width"></div>
         <div id="results" class="content_width"></div>

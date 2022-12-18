@@ -121,10 +121,24 @@ for(let f of filters){
         // S'il y a un autre filtre déjà ouvert, on le ferme
         for(let f of filters){
             if(f.parentNode.classList.contains("open")){
-                f.parentNode.classList.remove("open");
+                let filterOther = f.parentNode;
+                filterOther.classList.remove("open");
+                filterOther.childNodes[3].style.display = "block"; // label P
+                filterOther.childNodes[5].childNodes[3].style.display = "none"; // input
             }
         }
-        event.target.parentNode.classList.add("open");
+        let filterClicked = event.target.parentNode;
+        filterClicked.classList.add("open");
+        filterClicked.childNodes[3].style.display = "none"; // label P
+        filterClicked.childNodes[5].childNodes[3].style.display = "block"; // input
+
+
+        // if(event.target.parentNode.classList.contains("open")){
+        //     event.target.parentNode.classList.remove("open");
+        // }
+        // event.target.addEventListener('click', function (event) {
+        //     event.target.parentNode.classList.remove("open");
+        // });
     });
 }
 // Fermer le filtre

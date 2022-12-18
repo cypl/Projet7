@@ -282,8 +282,31 @@ ul{
     cursor:pointer;
     transition:0.2s width cubic-bezier(.74,-0.01,.29,.99);
 }
-.filter_item p{
-    padding:0.8rem 2rem 0.8rem 1rem;
+.filter_item .filter_item_label {
+    padding:1rem 2rem 1rem 1rem;
+    line-height:1;
+}
+.filter_item_form{}
+.filter_item_form__label{
+    visibility: hidden;
+    height: 0px;
+    display: block;
+}
+.filter_item_form__input{
+    width:100%;
+    padding:1rem 2rem 1rem 1rem;
+    background-color: transparent;
+    border:none;
+    font-size:1rem;
+    color: #fff;
+    display:none;
+}
+.filter_item_form__input::placeholder{
+    color:#fff;
+    opacity:0.8;
+}
+.filter_item_form__input:focus{
+    outline:0;
 }
 .filter_item.open{
     width:28rem;
@@ -321,7 +344,7 @@ ul{
     width: 100%;
     max-height:200px;
     overflow-y: auto;
-    top: 3.12rem;
+    top: 3rem;
     left: 0;
     padding: 0.3rem 1rem 0.8rem 1rem;
     border-radius:0px 0px 3px 3px;
