@@ -284,7 +284,8 @@ ul{
 }
 .filter_item .filter_item_label {
     padding:1rem 2rem 1rem 1rem;
-    line-height:1;
+    line-height:1rem;
+    height:3rem;
 }
 .filter_item_form{}
 .filter_item_form__label{
@@ -298,6 +299,8 @@ ul{
     background-color: transparent;
     border:none;
     font-size:1rem;
+    line-height:1rem;
+    height:3rem;
     color: #fff;
     display:none;
 }
