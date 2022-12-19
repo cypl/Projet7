@@ -23,25 +23,38 @@ function searchByText(inputValue){
 
     // L'algoritme de recherche est soustractif, 
     // on va donc retirer à recipesFromSearch les éléments qui ne correspondent pas à la recherche
+    
+    let inputValueForTest = inputValue.toLowerCase();
 
     // 1 - on fait une première recherche sur la liste d'ingrédients
-        // const testIngredient = recipesFromSearch.filter(recipe => recipe.ingredients);
-        // recipe.ingredients est le tableau de tous les ingrédients d'une recette
-        // const restAfterTestIngredient = recipesFromSearch.filter(recipe => !recipe.name.includes(inputValue));
-        // recipesFromSearch = testIngredient;
-        // console.log(recipesFromSearch);
+    // dans chaque recette, pour chaque liste d'ingrédients
+    let testIngredients = [];
+    for(let recipe of recipesFromSearch){
+        for(let ingredient of recipe.ingredients){
+            //console.log(Object.values(ingredient)[0].toLowerCase());
+            if(Object.values(ingredient)[0].toLowerCase().includes(inputValueForTest)) {
+                testIngredients.push(recipe);
+            }
+        }
+    }
+    // On retire les doublons du tableau de résultat
+    // Voilà les résultats du test sur les ingrédients
+    testIngredients = [...new Set(testIngredients)];
 
-
+    
     // 2 - on fait une seconde recherche dans le titre, sans distinction de casse
-    let inputValueForTest = inputValue.toLowerCase();
-    const testName = recipesFromSearch.filter(recipe => recipe.name.toLowerCase().includes(inputValueForTest));
-    const restAfterTestName = recipesFromSearch.filter(recipe => !recipe.name.toLowerCase().includes(inputValue));
-    recipesFromSearch = testName;
+    // On crée un tableau dans lequel on retrouve les éléménts de recipesFromSearch[] moins les éléments qui ont déjà été trouvé
+    let restRecipesAfterTestIngredient = recipesFromSearch.filter(x => !testIngredients.includes(x));
+    let testNames = restRecipesAfterTestIngredient.filter(recipe => recipe.name.toLowerCase().includes(inputValueForTest));
 
-    console.log(restAfterTestName);
 
     // 3 - on fait une dernière recherche dans la description
-
+    // On crée un tableau dans lequel on retrouve les éléménts de recipesFromSearch[] moins les éléments qui ont déjà été trouvés dans les deux tests précédents
+    let restAfterTestNames = restRecipesAfterTestIngredient.filter(recipe => !recipe.name.toLowerCase().includes(inputValueForTest));
+    let testDescription = restAfterTestNames.filter(recipe => recipe.description.toLowerCase().includes(inputValueForTest));
+    
+    // 4 - Résultat : 
+    recipesFromSearch = testIngredients.concat(testNames).concat(testDescription);
 
     return recipesFromSearch;
 };
