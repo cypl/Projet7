@@ -61,8 +61,6 @@ function searchByText(inputValue){
 
 // On crée une fonction pour afficher les recettes, en fonction d'un Array de recettes
 function displayRecipes(recipesArray){
-    // On supprime le message d'alerte précédent
-    // removePreviousMessageAlert();
     // On supprime les résultats en cours
     if(results.querySelector("article")){results.innerHTML = "";} 
     // Dans le cas où la recherche ne donne rien, on affiche la liste complète des recettes par défaut
