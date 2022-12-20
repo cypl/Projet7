@@ -119,29 +119,27 @@ for(let f of filters){
     // Ouvrir un des onglets du filtre
     f.addEventListener('click', function (event) {
         // S'il y a un autre filtre déjà ouvert, on le ferme
-        for(let f of filters){
-            if(f.parentNode.classList.contains("open")){
-                let filterOther = f.parentNode;
-                filterOther.classList.remove("open");
-                filterOther.childNodes[3].style.display = "block"; // label P
-                filterOther.childNodes[5].childNodes[3].style.display = "none"; // input
-            }
-        }
+        // for(let f of filters){
+        //     if(f.parentNode.classList.contains("open")){
+        //         let filterOther = f.parentNode;
+        //         filterOther.classList.remove("open");
+        //         filterOther.childNodes[3].style.display = "block"; // label P
+        //         filterOther.childNodes[5].childNodes[3].style.display = "none"; // input
+        //     }
+        // }
+
+        //Ouvrir
         let filterClicked = event.target.parentNode;
         filterClicked.classList.add("open");
         filterClicked.childNodes[3].style.display = "none"; // label P
         filterClicked.childNodes[5].childNodes[3].style.display = "block"; // input
 
+        //Fermer
+        filterClicked.addEventListener("mouseleave", function( event ) {
+            filterClicked.classList.remove("open");
+            filterClicked.childNodes[3].style.display = "block"; // label P
+            filterClicked.childNodes[5].childNodes[3].style.display = "none"; // input
+        });
 
-        // if(event.target.parentNode.classList.contains("open")){
-        //     event.target.parentNode.classList.remove("open");
-        // }
-        // event.target.addEventListener('click', function (event) {
-        //     event.target.parentNode.classList.remove("open");
-        // });
     });
 }
-// Fermer le filtre
-
-// .filter_item.open
-// .filter_item.open .filter_list
