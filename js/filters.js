@@ -42,74 +42,116 @@ function datasFilterUstensils(recipesArray){
 }
 
 // Une fois que l'on a récupéré les datas pour les 3 filtres, on peut les afficher dans l'UI
-
 const filterIngredients = document.getElementById("filter_ingredients");
 const filterAppliance = document.getElementById("filter_appliance");
 const filterUstensils = document.getElementById("filter_ustensils");
 
+// On va avoir besoin d'une petite fonction pour reformatter les textes (capitale, minuscules) dans la liste des critères des filtres
 function stringFirstLetterUppercase(string){
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
+
+// On crée une fonction pour constuire la liste des filtres, en fonction des données du tableau de résultat, 
+// et du critère du filtre, ex : "ingredients"
+function buildFilterList(recipesArray, datasFilterCriteria, criteria){
+    // on supprime les éléments qui pourrait rester d'un chargement précédent
+    if(document.getElementById(criteria + "_list")){document.getElementById(criteria + "_list").remove();}
+    // on construit le filtre
+    const filterCriteriaList = document.createElement("ul");
+    filterCriteriaList.setAttribute("id", criteria + "_list");
+    filterCriteriaList.classList.add("filter_list");
+    const filterWrapper = document.getElementById("filter_" + criteria);
+    filterWrapper.append(filterCriteriaList);
+    // on ajoute les différents items du filtre, en fonction des données du tableau recipesArray[]
+    let filterItemsData = datasFilterCriteria;
+    for(let data of filterItemsData){
+        let filterItem = document.createElement("li");
+        filterItem.classList.add("ingredient_item");
+        filterItem.classList.add("filter_list_item");
+        filterItem.classList.add("filter_list_item--" + criteria);
+        filterItem.textContent = stringFirstLetterUppercase(data);
+        filterCriteriaList.append(filterItem);
+    }
+}
+
+
+// On crée une fonction qui gère l'intéractivité sur les éléments du filtre
+// On crée 3 tableaux, qui vont stocker les filtres sélectionnés
+let filtersSelectedIngredients = []
+let filtersSelectedAppliance = []
+let filtersSelectedUstensils = []
+function manageFilterList(criteria, filtersSelected){
+    const filtersItems = document.getElementsByClassName("filter_list_item--" + criteria);
+    for(let filtersItem of filtersItems){
+        filtersItem.addEventListener('click', function (event) {
+            filtersItem.classList.add("selected_filter");
+            filtersSelected.push(filtersItem.textContent);
+            console.log(filtersSelected);
+            displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
+        });
+    }
+}
+
+
 // On crée un fonction pour afficher les éléments du filtre ingrédients
 function displayFilterIngredients(recipesArray){
-    if(document.getElementById("ingredients_list")){document.getElementById("ingredients_list").remove();}
-    const filterIngredientsList = document.createElement("ul");
-    filterIngredientsList.setAttribute("id","ingredients_list");
-    filterIngredientsList.classList.add("filter_list");
-    filterIngredients.append(filterIngredientsList);
-    let datasIngredients = datasFilterIngredients(recipesArray);
-    for(let data of datasIngredients){
-        let dataIngredientItem = document.createElement("li");
-        dataIngredientItem.classList.add("ingredient_item");
-        dataIngredientItem.classList.add("filter_list_item");
-        dataIngredientItem.textContent = stringFirstLetterUppercase(data);
-        filterIngredientsList.append(dataIngredientItem);
-    }
+    buildFilterList(recipesArray, datasFilterIngredients(recipesArray), "ingredients");
+    manageFilterList("ingredients", filtersSelectedIngredients);
 }
 
 
 // On crée un fonction pour afficher les éléments du filtre appareils
 function displayFilterAppliance(recipesArray){
-    if(document.getElementById("appliance_list")){document.getElementById("appliance_list").remove();}
-    const filterApplianceList = document.createElement("ul");
-    filterApplianceList.setAttribute("id","appliance_list");
-    filterApplianceList.classList.add("filter_list");
-    filterAppliance.append(filterApplianceList);
-    let datasAppliance = datasFilterAppliance(recipesArray);
-    for(let data of datasAppliance){
-        let dataApplianceItem = document.createElement("li");
-        dataApplianceItem.classList.add("appliance_item");
-        dataApplianceItem.classList.add("filter_list_item");
-        dataApplianceItem.textContent = stringFirstLetterUppercase(data);
-        filterApplianceList.append(dataApplianceItem);
-    }
+    buildFilterList(recipesArray, datasFilterUstensils(recipesArray), "ustensils");
+    manageFilterList("ustensils", filtersSelectedAppliance);
 }
 
 
 // On crée un fonction pour afficher les éléments du filtre ustensiles
 function displayFilterUstensils(recipesArray){
-    if(document.getElementById("ustensils_list")){document.getElementById("ustensils_list").remove();}
-    const filterUstensilsList = document.createElement("ul");
-    filterUstensilsList.setAttribute("id","ustensils_list");
-    filterUstensilsList.classList.add("filter_list");
-    filterUstensils.append(filterUstensilsList);
-    let datasUstensils = datasFilterUstensils(recipesArray);
-    for(let data of datasUstensils){
-        let dataUstensilItem = document.createElement("li");
-        dataUstensilItem.classList.add("ustensil_item");
-        dataUstensilItem.classList.add("filter_list_item");
-        dataUstensilItem.textContent = stringFirstLetterUppercase(data);
-        filterUstensilsList.append(dataUstensilItem);
-    }
+    buildFilterList(recipesArray, datasFilterAppliance(recipesArray), "appliance");
+    manageFilterList("appliance", filtersSelectedUstensils);
 }
 
 
+// On crée une fonction pour afficher les filtres
 function displayFilters(recipes){
     displayFilterIngredients(recipes);
     displayFilterAppliance(recipes);
     displayFilterUstensils(recipes);
 }
 
+// On crée une fonction qui va afficher les filtres sélectionnés sous le champ de recherche, sous la forme de tags
+function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+    if(document.getElementById("filters_selected_list")){
+        document.getElementById("filters_selected_list").remove();
+    }
+    const filtersWrapper = document.getElementById("filters");
+    const filtersSelectedWrapper = document.createElement("ul");
+    filtersSelectedWrapper.setAttribute("id","filters_selected_list");
+    filtersWrapper.prepend(filtersSelectedWrapper);
+    for(let ingredient of filtersSelectedIngredients){
+        let filtersSelectedItem = document.createElement("li");
+        filtersSelectedItem.classList.add("filter_item_selected");
+        filtersSelectedItem.classList.add("selected_ingredient");
+        filtersSelectedItem.textContent = ingredient;
+        filtersSelectedWrapper.append(filtersSelectedItem);
+    }
+    for(let ustensil of filtersSelectedUstensils){
+        let filtersSelectedItem = document.createElement("li");
+        filtersSelectedItem.classList.add("filter_item_selected");
+        filtersSelectedItem.classList.add("selected_appliance");
+        filtersSelectedItem.textContent = ustensil;
+        filtersSelectedWrapper.append(filtersSelectedItem);
+    }
+    for(let appliance of filtersSelectedAppliance){
+        let filtersSelectedItem = document.createElement("li");
+        filtersSelectedItem.classList.add("filter_item_selected");
+        filtersSelectedItem.classList.add("selected_ustensil");
+        filtersSelectedItem.textContent = appliance;
+        filtersSelectedWrapper.append(filtersSelectedItem);
+    }
+}
 
 
 
@@ -133,7 +175,6 @@ for(let f of filters){
         filterClicked.classList.add("open");
         filterClicked.childNodes[3].style.display = "none"; // label P
         filterClicked.childNodes[5].childNodes[3].style.display = "block"; // input
-
         //Fermer
         filterClicked.addEventListener("mouseleave", function( event ) {
             filterClicked.classList.remove("open");

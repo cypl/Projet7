@@ -367,6 +367,7 @@ ul{
     transition:0.2s opacity ease-in-out,0.2s transform ease-in-out;
 }
 .filter_list_item{
+    position: relative;
     width: calc(50% - 0.5rem);
     line-height: 1;
     padding: 0.5rem 0.7rem;
@@ -374,22 +375,58 @@ ul{
     margin-top:0.5rem;
     font-weight:400;
     cursor: pointer;
+    overflow: hidden;
+    transition:0.1s opacity ease-in-out;
 }
-#filter_ingredients .filter_list_item{
-    background-color:hsla(216, 92%, 53%, 1);
+.filter_list_item--ingredients{background-color:hsla(216, 92%, 53%, 1);}
+.filter_list_item--ingredients:hover{background-color:hsla(216, 92%, 50%, 1);}
+.filter_list_item--appliance{background-color:hsla(152, 60%, 53%, 1);}
+.filter_list_item--appliance:hover{background-color:hsla(152, 60%, 50%, 1);}
+.filter_list_item--ustensils{background-color:hsla(6, 81%, 58%, 1);}
+.filter_list_item--ustensils:hover{background-color:hsla(6, 81%, 55%, 1);}
+
+.filter_list_item.selected_filter{
+    opacity: 0.5;
+    pointer-events: none;
+    padding-right: 2.2rem;
+    transition:0.1s opacity ease-in-out;
 }
-#filter_ingredients .filter_list_item:hover{
-    background-color:hsla(216, 92%, 50%, 1);
+.filter_list_item::before{
+    content: "";
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    margin-top:-0.6rem;
+    height: 1.2rem;
+    width: 1.2rem;
+    background-image: url("../images/circle-check-white.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition:0.1s transform ease-in-out;
+    transform:scale(0);
 }
-#filter_appliance .filter_list_item{
-    background-color:hsla(152, 60%, 53%, 1);
+.filter_list_item.selected_filter::before{
+    transition:0.1s transform ease-in-out;
+    transform:scale(1);
 }
-#filter_appliance .filter_list_item:hover{
-    background-color:hsla(152, 60%, 50%, 1);
+
+
+/* Liste des filtres sélectionnés */
+#filters_selected_list{
+    width:100%;
+    padding-bottom: 0.5rem;
 }
-#filter_ustensils .filter_list_item{
-    background-color:hsla(6, 81%, 58%, 1);
+#filters_selected_list .filter_item_selected{
+    display:inline-block;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    padding: 0.5rem 0.7rem;
+    border-radius: 3px;
+    font-weight: 400;
+    cursor: pointer;
+    color:#fff;
 }
-#filter_ustensils .filter_list_item:hover{
-    background-color:hsla(6, 81%, 55%, 1);
-}
+.selected_ingredient{background-color:#3282F7;}
+.selected_appliance{background-color:#68D9A4;}
+.selected_ustensil{background-color:#ED6454;}
