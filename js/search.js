@@ -31,7 +31,6 @@ function searchByText(inputValue){
     let testIngredients = [];
     for(let recipe of recipesFromSearch){
         for(let ingredient of recipe.ingredients){
-            //console.log(Object.values(ingredient)[0].toLowerCase());
             if(Object.values(ingredient)[0].toLowerCase().includes(inputValueForTest)) {
                 testIngredients.push(recipe);
             }
@@ -43,7 +42,7 @@ function searchByText(inputValue){
 
     
     // 2 - on fait une seconde recherche dans le titre, sans distinction de casse
-    // On crée un tableau dans lequel on retrouve les éléménts de recipesFromSearch[] moins les éléments qui ont déjà été trouvé
+    // On crée un tableau dans lequel on retrouve les éléménts de recipesFromSearch[] moins les éléments qui ont déjà été trouvés
     let restRecipesAfterTestIngredient = recipesFromSearch.filter(x => !testIngredients.includes(x));
     let testNames = restRecipesAfterTestIngredient.filter(recipe => recipe.name.toLowerCase().includes(inputValueForTest));
 
@@ -59,6 +58,44 @@ function searchByText(inputValue){
     return recipesFromSearch;
 };
 
+
+function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+    const searchField = document.getElementById("search_main");
+    let inputValue = cleanInputValue(searchField.value);
+    recipesFromSearch = searchByText(inputValue);
+    // On retire les recettes qui ne correspondent pas aux filtres dans recipesFromSearch[]
+    
+    // let testIngredientsFilters = [];
+    // for(let recipe of recipesFromSearch){
+    //     for(let ingredient of recipe.ingredients){
+    //         if(Object.values(ingredient)[0].toLowerCase().includes(inputValueForTest)) {
+    //             testIngredientsFilters.push(recipe);
+    //         }
+    //     }
+    // }
+
+    let testApplianceFilters = recipesFromSearch.filter(recipe => recipe.appliance.includes(filtersSelectedAppliance));
+
+    const recipesFromFilters = testApplianceFilters;
+    return recipesFromFilters;
+}
+
+
+function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+    // On sort d'abord les résultats de la recherche par texte
+    const recipesFromSearch = searchByText(inputValue);
+    // On précise ensuite la recherche avec les filtres
+    const recipesFromFilters = searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+
+    // const recipesResults = recipesFromSearch - recipesFromFilters;
+    // On retire les recettes correspondantes aux filtres
+    const recipesResults = recipesFromSearch.filter(n => recipesFromFilters.includes(n));
+    console.log(recipesResults);
+    return recipesResults; 
+}
+
+
+
 // On crée une fonction pour afficher les recettes, en fonction d'un Array de recettes
 function displayRecipes(recipesArray){
     // On supprime les résultats en cours
@@ -71,6 +108,7 @@ function displayRecipes(recipesArray){
     for(let recipe of recipesArray){
         createRecipeCard(recipe);
     }
+    console.log("Nouvelle liste de recettes affichée.")
 }
 
 

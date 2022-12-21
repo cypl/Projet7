@@ -2,6 +2,7 @@ const search = document.getElementById("search");
 const messages = document.getElementById("messages");
 const results = document.getElementById("results");
 
+
 // On crée une fonction qui affiche un message par défaut, avant la recherche de l'utilisateur
 // Par exemple, le nombre total de recettes que le site contient.
 function printMessageBeforeSearch(){
@@ -110,7 +111,8 @@ function manageMessagesSearch(inputValue, recipesArray){
     }
 }
 
-// On crée une fonction pour afficher la liste complète des recettes un un message au chargement de la page
+
+// On crée une fonction pour afficher la liste complète des recettes, un message au chargement de la page et les filtres
 function onInitialPageLoad(){
     displayRecipes(recipes);
     printMessageBeforeSearch();
