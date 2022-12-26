@@ -13,70 +13,110 @@ function cleanInputValue(expression){
     return expressionClean;
 }
 
+// On crée une fonction pour chaque test de la fonction searchByText();
+function findInTitle(inputValue, title){
+    return title.toLowerCase().includes(inputValue);
+}
+function findInIngredients(inputValue, ingredients){
+    return ingredients.find(ing => {
+        if(ing.ingredient.toLowerCase().includes(inputValue)){
+            return true;
+        };
+    });
+}
+function findInDescription(inputValue, description){
+    return description.toLowerCase().includes(inputValue);
+}
 
 
-//On crée une fonction pour rechercher dans les datas ce qui peut correspondre aux lettres saisies
+//On crée une fonction pour rechercher dans les recettes à partir d'une expression
 function searchByText(inputValue){
-    
-    // Par défaut, le résultat de recherche est égal à la liste complète des recettes
-    let recipesFromSearch = recipes;
-
-    // L'algoritme de recherche est soustractif, 
-    // on va donc retirer à recipesFromSearch les éléments qui ne correspondent pas à la recherche
-    
     let inputValueForTest = inputValue.toLowerCase();
-
-    // 1 - on fait une première recherche sur la liste d'ingrédients
-    // dans chaque recette, pour chaque liste d'ingrédients
-    let testIngredients = [];
-    for(let recipe of recipesFromSearch){
-        for(let ingredient of recipe.ingredients){
-            if(Object.values(ingredient)[0].toLowerCase().includes(inputValueForTest)) {
-                testIngredients.push(recipe);
-            }
+    const recipesFromSearch = recipes.filter(recipe => {
+        if(findInTitle(inputValueForTest, recipe.name)){ 
+            return true; 
+        } // ou
+        if(findInIngredients(inputValueForTest, recipe.ingredients)){
+            return true;
+        }// ou
+        if(findInDescription(inputValueForTest, recipe.description)){ 
+            return true; 
         }
+    })
+    if(recipesFromSearch.length == 0){
+        recipesFromSearch = recipes;
     }
-    // On retire les doublons du tableau de résultat
-    // Voilà les résultats du test sur les ingrédients
-    testIngredients = [...new Set(testIngredients)];
-
-    
-    // 2 - on fait une seconde recherche dans le titre, sans distinction de casse
-    // On crée un tableau dans lequel on retrouve les éléménts de recipesFromSearch[] moins les éléments qui ont déjà été trouvés
-    let restRecipesAfterTestIngredient = recipesFromSearch.filter(x => !testIngredients.includes(x));
-    let testNames = restRecipesAfterTestIngredient.filter(recipe => recipe.name.toLowerCase().includes(inputValueForTest));
-
-
-    // 3 - on fait une dernière recherche dans la description
-    // On crée un tableau dans lequel on retrouve les éléménts de recipesFromSearch[] moins les éléments qui ont déjà été trouvés dans les deux tests précédents
-    let restAfterTestNames = restRecipesAfterTestIngredient.filter(recipe => !recipe.name.toLowerCase().includes(inputValueForTest));
-    let testDescription = restAfterTestNames.filter(recipe => recipe.description.toLowerCase().includes(inputValueForTest));
-    
-    // 4 - Résultat : 
-    recipesFromSearch = testIngredients.concat(testNames).concat(testDescription);
-
     return recipesFromSearch;
 };
 
 
+function findWithFilterIngredients(recipe, selectedIngredients){
+    let recipeIngredientsLowerCase = recipe.ingredients.map(ing => { return ing.ingredient.toLowerCase() });
+    return recipeIngredientsLowerCase.find(ing => {
+        if(selectedIngredients.includes(ing)){ 
+            return true;
+        }
+    });
+}
+function findWithFilterAppliance(recipe, selectedIngredients){
+    return selectedIngredients.find(appliance => {
+        if(selectedIngredients.includes(recipe.appliance.toLowerCase())){ 
+            return true;
+        }
+    });
+}
+function findWithFilterUstensils(recipe, selectedIngredients){
+    let recipeUstensilsLowerCase = recipe.ustensils.map(ust => { return ust.toLowerCase() });
+    return recipeUstensilsLowerCase.find(ust => {
+        if(selectedIngredients.includes(ust)){ return true;}
+    });
+}
+
+//On crée une fonction pour rechercher dans les recettes à partir des filtres
 function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
     const searchField = document.getElementById("search_main");
     let inputValue = cleanInputValue(searchField.value);
     recipesFromSearch = searchByText(inputValue);
+    
     // On retire les recettes qui ne correspondent pas aux filtres dans recipesFromSearch[]
     
-    // let testIngredientsFilters = [];
-    // for(let recipe of recipesFromSearch){
-    //     for(let ingredient of recipe.ingredients){
-    //         if(Object.values(ingredient)[0].toLowerCase().includes(inputValueForTest)) {
-    //             testIngredientsFilters.push(recipe);
-    //         }
-    //     }
-    // }
+    // 1 - Filtres Ingrédients
+    const filtersSelectedIngredientsLowerCase = filtersSelectedIngredients.map(ingredients => { return ingredients.toLowerCase() });
+    // const resultIngredientsFilters = recipesFromSearch.filter(recipe => {
+    //     let recipeIngredientsLowerCase = recipe.ingredients.map(ing => { return ing.ingredient.toLowerCase() });
+    //     return recipeIngredientsLowerCase.find(ing => {
+    //         if(filtersSelectedIngredientsLowerCase.includes(ing)){ return true;}
+    //     });
+    // });
+    const resultIngredientsFilters = recipesFromSearch.filter(recipe => {
+        if (findWithFilterIngredients(recipe, filtersSelectedIngredientsLowerCase)){return true}
+    });
+    //console.log(resultIngredientsFilters);
 
-    let testApplianceFilters = recipesFromSearch.filter(recipe => recipe.appliance.includes(filtersSelectedAppliance));
+    // 2 - Filtres Appareils
+    const filtersSelectedApplianceLowerCase = filtersSelectedAppliance.map(appliance => { return appliance.toLowerCase() });
+    const resultsApplianceFilters = recipesFromSearch.filter(recipe => {
+        if (findWithFilterAppliance(recipe, filtersSelectedApplianceLowerCase)){return true}
+    });
+    //console.log(resultsApplianceFilters);
 
-    const recipesFromFilters = testApplianceFilters;
+    // 3 - Filtres Ustensiles
+    // On convertit les données du tableau filtersSelectedUstensils[] en lower case pour pouvoir les comparer
+    const filtersSelectedUstensilsLowerCase = filtersSelectedUstensils.map(ustensil => { return ustensil.toLowerCase() });
+    const resultUstensilsFilters = recipesFromSearch.filter(recipe => {
+        if(findWithFilterUstensils(recipe, filtersSelectedUstensilsLowerCase)){return true}
+    });
+    // console.log(resultUstensilsFilters);
+    
+    const recipesFromFilters = recipesFromSearch.filter(recipe => {
+        if (findWithFilterIngredients(recipe, filtersSelectedIngredientsLowerCase)
+            || findWithFilterAppliance(recipe, filtersSelectedApplianceLowerCase)
+            || findWithFilterUstensils(recipe, filtersSelectedUstensilsLowerCase)){
+                return true;
+            }
+    });
+    console.log(recipesFromFilters);
+    //const recipesFromFilters = resultUstensilsFilters;
     return recipesFromFilters;
 }
 
@@ -90,7 +130,7 @@ function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersS
     // const recipesResults = recipesFromSearch - recipesFromFilters;
     // On retire les recettes correspondantes aux filtres
     const recipesResults = recipesFromSearch.filter(n => recipesFromFilters.includes(n));
-    console.log(recipesResults);
+    //console.log(recipesResults);
     return recipesResults; 
 }
 
