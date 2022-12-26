@@ -210,13 +210,15 @@ function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppli
 //     }
 // }
 
+
 // On crée un fonction pour supprimer tous les filtres sélectionnés
 function removeAllSelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
-    filtersSelectedIngredients = [];
-    filtersSelectedAppliance = [];
-    filtersSelectedUstensils = [];
+    filtersSelectedIngredients.length = 0;
+    filtersSelectedAppliance.length = 0;
+    filtersSelectedUstensils.length = 0;
     displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
 }
+
 
 // On crée un fonction pour afficher les éléments du filtre ingrédients
 function displayFilterIngredients(recipesArray){

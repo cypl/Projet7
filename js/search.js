@@ -76,36 +76,14 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
     let inputValue = cleanInputValue(searchField.value);
     recipesFromSearch = searchByText(inputValue);
     
-    // On retire les recettes qui ne correspondent pas aux filtres dans recipesFromSearch[]
+    // On retire les recettes de recipesFromSearch[] qui ne correspondent pas aux filtres 
     
     // 1 - Filtres Ingrédients
     const filtersSelectedIngredientsLowerCase = filtersSelectedIngredients.map(ingredients => { return ingredients.toLowerCase() });
-    // const resultIngredientsFilters = recipesFromSearch.filter(recipe => {
-    //     let recipeIngredientsLowerCase = recipe.ingredients.map(ing => { return ing.ingredient.toLowerCase() });
-    //     return recipeIngredientsLowerCase.find(ing => {
-    //         if(filtersSelectedIngredientsLowerCase.includes(ing)){ return true;}
-    //     });
-    // });
-    const resultIngredientsFilters = recipesFromSearch.filter(recipe => {
-        if (findWithFilterIngredients(recipe, filtersSelectedIngredientsLowerCase)){return true}
-    });
-    //console.log(resultIngredientsFilters);
-
     // 2 - Filtres Appareils
     const filtersSelectedApplianceLowerCase = filtersSelectedAppliance.map(appliance => { return appliance.toLowerCase() });
-    const resultsApplianceFilters = recipesFromSearch.filter(recipe => {
-        if (findWithFilterAppliance(recipe, filtersSelectedApplianceLowerCase)){return true}
-    });
-    //console.log(resultsApplianceFilters);
-
     // 3 - Filtres Ustensiles
-    // On convertit les données du tableau filtersSelectedUstensils[] en lower case pour pouvoir les comparer
     const filtersSelectedUstensilsLowerCase = filtersSelectedUstensils.map(ustensil => { return ustensil.toLowerCase() });
-    const resultUstensilsFilters = recipesFromSearch.filter(recipe => {
-        if(findWithFilterUstensils(recipe, filtersSelectedUstensilsLowerCase)){return true}
-    });
-    // console.log(resultUstensilsFilters);
-    
     const recipesFromFilters = recipesFromSearch.filter(recipe => {
         if (findWithFilterIngredients(recipe, filtersSelectedIngredientsLowerCase)
             || findWithFilterAppliance(recipe, filtersSelectedApplianceLowerCase)
@@ -114,7 +92,6 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
             }
     });
     console.log(recipesFromFilters);
-    //const recipesFromFilters = resultUstensilsFilters;
     return recipesFromFilters;
 }
 
@@ -128,7 +105,7 @@ function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersS
     // const recipesResults = recipesFromSearch - recipesFromFilters;
     // On retire les recettes correspondantes aux filtres
     const recipesResults = recipesFromSearch.filter(n => recipesFromFilters.includes(n));
-    //console.log(recipesResults);
+    console.log(recipesResults);
     return recipesResults; 
 }
 
