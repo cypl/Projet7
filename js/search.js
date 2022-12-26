@@ -43,13 +43,11 @@ function searchByText(inputValue){
             return true; 
         }
     })
-    if(recipesFromSearch.length == 0){
-        recipesFromSearch = recipes;
-    }
     return recipesFromSearch;
 };
 
 
+// On crée une fonction pour chaque test de la fonction searchByFilters();
 function findWithFilterIngredients(recipe, selectedIngredients){
     let recipeIngredientsLowerCase = recipe.ingredients.map(ing => { return ing.ingredient.toLowerCase() });
     return recipeIngredientsLowerCase.find(ing => {
@@ -157,6 +155,9 @@ const searchField = document.getElementById("search_main");
 searchField.value = "";
 searchField.addEventListener('input', function (event) {
     
+    // Si des filtres sont déjà sélectionnés, on les retire
+    removeAllSelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+
     let inputValue = cleanInputValue(this.value); // expression
     // On lance la fonction de recherche searchByText()
     // elle retourne un Array avec les résultats

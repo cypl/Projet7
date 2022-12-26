@@ -168,7 +168,7 @@ function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppli
     }
 }
 
-// function removeSelectedFiltersOnClick(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+// function removeOneSelectedFilter(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
 //     if(document.getElementById("filters_selected_list")){
 //         const filterItemsSelected = document.getElementsByClassName("filter_item_selected");
 //         for(let filterItemSelected of filterItemsSelected){
@@ -210,6 +210,13 @@ function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppli
 //     }
 // }
 
+// On crée un fonction pour supprimer tous les filtres sélectionnés
+function removeAllSelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+    filtersSelectedIngredients = [];
+    filtersSelectedAppliance = [];
+    filtersSelectedUstensils = [];
+    displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+}
 
 // On crée un fonction pour afficher les éléments du filtre ingrédients
 function displayFilterIngredients(recipesArray){
