@@ -170,7 +170,9 @@ function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppli
 }
 
 // On crée une fonction pour mettre à jour le filtre, lorsque l'on dé-sélectionne un filtre
-function updateFilter(filterItemSelected, filtersSelectedType, filterListClassName){
+function updateFilter(filterItemSelected, filterItemsSelected, filtersSelectedType, filterListClassName){
+    // S'il ne reste qu'un élément dans les filtres sélectionnés, on supprime le conteneur
+    if(filterItemsSelected.length == 1){document.getElementById("filters_selected_list").remove();}
     // on recrée le tableau filtersSelectedIngredients[]
     let filtersSelectedTypeUpdated = filtersSelectedType.filter(item => !item.includes(filterItemSelected.textContent));
     filtersSelectedType.length = 0;
@@ -194,13 +196,13 @@ function removeOneSelectedFilter(filtersSelectedIngredients, filtersSelectedAppl
             filterItemSelected.addEventListener('click', function (event) {
                 // le clic sur un filtre sélectionné déclenche la fonction updateFilter();
                 if(filterItemSelected.classList.contains("selected_ingredient")){
-                    updateFilter(filterItemSelected, filtersSelectedIngredients, "filter_list_item--ingredients");
+                    updateFilter(filterItemSelected, filterItemsSelected, filtersSelectedIngredients, "filter_list_item--ingredients");
                 }
                 if(filterItemSelected.classList.contains("selected_appliance")){
-                    updateFilter(filterItemSelected, filtersSelectedAppliance, "filter_list_item--appliance");
+                    updateFilter(filterItemSelected, filterItemsSelected, filtersSelectedAppliance, "filter_list_item--appliance");
                 }
                 if(filterItemSelected.classList.contains("selected_ustensil")){
-                    updateFilter(filterItemSelected, filtersSelectedUstensils, "filter_list_item--ustensils");
+                    updateFilter(filterItemSelected, filterItemsSelected, filtersSelectedUstensils, "filter_list_item--ustensils");
                 }
                 // On régénère les résultats de la recherche, et on affiche les recettes correspondantes
                 const searchField = document.getElementById("search_main");

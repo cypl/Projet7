@@ -86,7 +86,6 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
                 return true;
             }
     });
-    console.log(recipesFromFilters);
     return recipesFromFilters;
 }
 
@@ -118,7 +117,7 @@ function displayRecipes(recipesArray){
     for(let recipe of recipesArray){
         createRecipeCard(recipe);
     }
-    //console.log("On affiche un message de résultats.");
+    console.log("On affiche un message de résultats.");
 }
 
 
