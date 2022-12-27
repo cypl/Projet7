@@ -95,13 +95,16 @@ function removePreviousMessageAlert(){
 
 
 // On crée une fonction pour gérer ces messages d'erreur
-function manageMessagesSearch(inputValue, recipesArray){
+function manageMessagesFromSearch(inputValue, recipesArray){
+    // Si l'utilisateur n'a rien écrit
+    if(inputValue.length == 0){
+        printMessageBeforeSearch();
+    }
+    // Si l'utilisateur a écrit un texte trop court
     if(inputValue.length < 3 && inputValue.length > 0){
         printMessageRequiredSearch();
     }
-    if(inputValue.length == 0){
-        printMessageBeforeSearch();
-    } 
+    // Si l'utilisateur a écrit un texte assez long
     if(inputValue.length >= 3){ // si l'input contient plus de 3 caractères
         if(searchByText(inputValue).length > 0){ // si le tableau de résultats de recherche contient quelquechose
             printMessageSuccessfulSearch(inputValue, recipesArray);

@@ -123,7 +123,7 @@ function displayRecipes(recipesArray){
     for(let recipe of recipesArray){
         createRecipeCard(recipe);
     }
-    console.log("Nouvelle liste de recettes affichée.")
+    //console.log("On affiche un message de résultats.");
 }
 
 
@@ -155,6 +155,6 @@ searchField.addEventListener('input', function (event) {
 
     // Gestion des messages avant/erreur/succès
     let recipesFromSearch = searchByText(inputValue);
-    manageMessagesSearch(inputValue, recipesFromSearch);
+    manageMessagesFromSearch(inputValue, recipesFromSearch);
 
 });

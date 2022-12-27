@@ -246,7 +246,6 @@ function displayFilters(recipes){
     displayFilterIngredients(recipes);
     displayFilterAppliance(recipes);
     displayFilterUstensils(recipes);
-    console.log("Nouvelle liste de tags créées.")
 }
 
 
@@ -256,16 +255,6 @@ const filters = document.getElementsByClassName("filter_item_label");
 for(let f of filters){
     // Ouvrir un des onglets du filtre
     f.addEventListener('click', function (event) {
-        // S'il y a un autre filtre déjà ouvert, on le ferme
-        // for(let f of filters){
-        //     if(f.parentNode.classList.contains("open")){
-        //         let filterOther = f.parentNode;
-        //         filterOther.classList.remove("open");
-        //         filterOther.childNodes[3].style.display = "block"; // label P
-        //         filterOther.childNodes[5].childNodes[3].style.display = "none"; // input
-        //     }
-        // }
-
         //Ouvrir
         let filterClicked = event.target.parentNode;
         filterClicked.classList.add("open");
@@ -277,6 +266,5 @@ for(let f of filters){
             filterClicked.childNodes[3].style.display = "block"; // label P
             filterClicked.childNodes[5].childNodes[3].style.display = "none"; // input
         });
-
     });
 }
