@@ -131,6 +131,7 @@ function interactFilterList(criteria, filtersSelected){
             let inputValue = cleanInputValue(searchField.value);
             const recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
             displayRecipes(recipesResults);
+            removeOneSelectedFilter(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
         });
     }
 }
@@ -168,47 +169,48 @@ function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppli
     }
 }
 
-// function removeOneSelectedFilter(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
-//     if(document.getElementById("filters_selected_list")){
-//         const filterItemsSelected = document.getElementsByClassName("filter_item_selected");
-//         for(let filterItemSelected of filterItemsSelected){
-//             filterItemSelected.addEventListener('click', function (event) {
-//                 //supprimer l'élément du tableau qui liste les éléments sélectionnés
-//                 if(filterItemSelected.classList.contains("selected_ingredient")){
-//                     let filtersSelectedIngredientsUpdated = filtersSelectedIngredients.filter(item => !item.includes(filterItemSelected.textContent));
-//                     filtersSelectedIngredients = filtersSelectedIngredientsUpdated;
-//                     console.log(filtersSelectedIngredients);
-//                     filterItemSelected.remove();
-//                     //return filtersSelectedIngredients;
-//                 }
-//                 if(filterItemSelected.classList.contains("selected_appliance")){
-//                     let filtersSelectedApplianceUpdated = filtersSelectedAppliance.filter(item => !item.includes(filterItemSelected.textContent));
-//                     filtersSelectedAppliance = filtersSelectedApplianceUpdated;
-//                     console.log(filtersSelectedAppliance);
-//                     filterItemSelected.remove();
-//                     //return filtersSelectedAppliance;
-//                 }
-//                 if(filterItemSelected.classList.contains("selected_ustensil")){
-//                     let filtersSelectedUstensilsUpdated = filtersSelectedUstensils.filter(item => !item.includes(filterItemSelected.textContent));
-//                     filtersSelectedUstensils = filtersSelectedUstensilsUpdated;
-//                     console.log(filtersSelectedUstensils);
-//                     filterItemSelected.remove();
-//                     //return filtersSelectedUstensils;
-//                 }
-//                 // //retirer la classe dans le filtre correspondant
-                
-//                 // On régénère les résultats de la recherche, et on affiche les recettes correspondantes
-//                 const searchField = document.getElementById("search_main");
-//                 let inputValue = cleanInputValue(searchField.value);
-//                 const recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
-//                 displayRecipes(recipesResults);
-//                 //On met à jour les listes de tags dans les filtres
-//                 //displayFilters(recipesResults);
-
-//             });
-//         }
-//     }
-// }
+// On crée une fonction pour mettre à jour le filtre, lorsque l'on dé-sélectionne un filtre
+function updateFilter(filterItemSelected, filtersSelectedType, filterListClassName){
+    // on recrée le tableau filtersSelectedIngredients[]
+    let filtersSelectedTypeUpdated = filtersSelectedType.filter(item => !item.includes(filterItemSelected.textContent));
+    filtersSelectedType.length = 0;
+    for(let f of filtersSelectedTypeUpdated){filtersSelectedType.push(f);}
+    // on supprime l'élément filtre sélectionné
+    filterItemSelected.remove();
+    // on supprime la classe CSS "selected_filter" de l'élément correspondant dans la liste du filtre
+    let filterItemSelectedString = filterItemSelected.textContent;
+    let filterListItem = document.getElementsByClassName(filterListClassName);
+    for(let f of filterListItem){
+        if(f.textContent == filterItemSelectedString){
+            f.classList.remove("selected_filter");
+        }
+    }
+}
+// On crée une fonction qui permet de supprimer un filtre sélectionné, et mettre à jour les recettes
+function removeOneSelectedFilter(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+    if(document.getElementById("filters_selected_list")){
+        const filterItemsSelected = document.getElementsByClassName("filter_item_selected");
+        for(let filterItemSelected of filterItemsSelected){
+            filterItemSelected.addEventListener('click', function (event) {
+                // le clic sur un filtre sélectionné déclenche la fonction updateFilter();
+                if(filterItemSelected.classList.contains("selected_ingredient")){
+                    updateFilter(filterItemSelected, filtersSelectedIngredients, "filter_list_item--ingredients");
+                }
+                if(filterItemSelected.classList.contains("selected_appliance")){
+                    updateFilter(filterItemSelected, filtersSelectedAppliance, "filter_list_item--appliance");
+                }
+                if(filterItemSelected.classList.contains("selected_ustensil")){
+                    updateFilter(filterItemSelected, filtersSelectedUstensils, "filter_list_item--ustensils");
+                }
+                // On régénère les résultats de la recherche, et on affiche les recettes correspondantes
+                const searchField = document.getElementById("search_main");
+                let inputValue = cleanInputValue(searchField.value);
+                const recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
+                displayRecipes(recipesResults);
+            });
+        }
+    }
+}
 
 
 // On crée un fonction pour supprimer tous les filtres sélectionnés

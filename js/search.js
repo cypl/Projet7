@@ -33,15 +33,11 @@ function findInDescription(inputValue, description){
 function searchByText(inputValue){
     let inputValueForTest = inputValue.toLowerCase();
     const recipesFromSearch = recipes.filter(recipe => {
-        if(findInTitle(inputValueForTest, recipe.name)){ 
-            return true; 
-        } // ou
-        if(findInIngredients(inputValueForTest, recipe.ingredients)){
-            return true;
-        }// ou
-        if(findInDescription(inputValueForTest, recipe.description)){ 
-            return true; 
-        }
+        if (findInTitle(inputValueForTest, recipe.name)
+            || findInIngredients(inputValueForTest, recipe.ingredients)
+            || findInDescription(inputValueForTest, recipe.description)){
+                return true;
+            }
     })
     return recipesFromSearch;
 };
@@ -77,7 +73,6 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
     recipesFromSearch = searchByText(inputValue);
     
     // On retire les recettes de recipesFromSearch[] qui ne correspondent pas aux filtres 
-    
     // 1 - Filtres Ingrédients
     const filtersSelectedIngredientsLowerCase = filtersSelectedIngredients.map(ingredients => { return ingredients.toLowerCase() });
     // 2 - Filtres Appareils
