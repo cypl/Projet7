@@ -428,9 +428,32 @@ ul{
     cursor: pointer;
     color:#fff;
 }
-.selected_ingredient{background-color:#3282F7;}
-.selected_appliance{background-color:#68D9A4;}
-.selected_ustensil{background-color:#ED6454;}
+.selected_ingredient{
+    background-color:#3282F7;
+    transition:0.1s background-color ease-in-out;
+}
+.selected_ingredient:hover{
+    background-color:hsla(216, 92%, 53%, 1);
+    transition:0.1s background-color ease-in-out;
+}
+.selected_appliance{
+    background-color:#68D9A4;
+    transition:0.1s background-color ease-in-out;
+}
+.selected_appliance:hover{
+    background-color:hsla(152, 60%, 53%, 1);
+    transition:0.1s background-color ease-in-out;
+}
+.selected_ustensil{
+    background-color:#ED6454;
+    transition:0.1s background-color ease-in-out;
+}
+.selected_ustensil:hover{
+    background-color:hsla(6, 81%, 58%, 1);
+    transition:0.1s background-color ease-in-out;
+}
+
+
 #filters_selected_list .filter_item_selected::before{
     content:"";
     position: absolute;
