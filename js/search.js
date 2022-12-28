@@ -104,6 +104,30 @@ function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersS
 }
 
 
+function showResultsMessage(){
+    const searchField = document.getElementById("search_main");
+    let inputValue = cleanInputValue(searchField.value);
+    // s'il n'y a pas de filtres
+    if(!document.getElementById("filters_selected_list")){
+        console.log("On affiche un message de résultats, il n'y a pas de filtres.");
+        // s'il n'y a aucune recherche texte
+        // if(!inputValue.length){console.log("il n'y a aucune recherche texte")}
+        // s'il y a une recherche texte insuffisante
+        // if(inputValue.length < 3 && inputValue.length > 0){console.log("s'il y a une recherche texte insuffisante")}
+        // s'il y a une recherche texte suffisante et des résultats
+        // if(inputValue.length >= 3){console.log("s'il y a une recherche texte suffisante")}
+        // s'il y a une recherche texte suffisante mais aucun résultats
+    } 
+    // s'il y a des filtres
+    else {
+        console.log("On affiche un message de résultats, il y a des filtres.");
+        // s'il n'y a aucune recherche texte
+        // s'il y a une recherche texte insuffisante
+        // s'il y a une recherche texte suffisante et des résultats
+        // s'il y a une recherche texte suffisante mais aucun résultats
+    }
+}
+
 
 // On crée une fonction pour afficher les recettes, en fonction d'un Array de recettes
 function displayRecipes(recipesArray){
@@ -115,9 +139,9 @@ function displayRecipes(recipesArray){
     }
     // Sinon on affiche les résultats correspondants
     for(let recipe of recipesArray){
-        createRecipeCard(recipe);
+        results.append(new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).createCard());
     }
-    console.log("On affiche un message de résultats.");
+    showResultsMessage();
 }
 
 

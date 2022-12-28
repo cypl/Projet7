@@ -267,19 +267,30 @@ ul{
 
 /* Filters */
 #filters{
+    padding-bottom:0.8rem;
+}
+#filters_wrapper{
     display: flex;
     flex-wrap: wrap;
     align-items: left;
-    padding-bottom:1.8rem;
 }
 .filter_item{
-    width:14rem;
+    width:17rem;
     margin-right:1rem;
+    margin-bottom:1rem;
     border-radius:3px;
     font-weight:700;
     color:#fff;
     position: relative;
     transition:0.2s width cubic-bezier(.74,-0.01,.29,.99);
+}
+.filter_item.open{
+    width:32rem;
+    border-radius:3px 3px 0px 0px;
+    transition:0.2s width cubic-bezier(.74,-0.01,.29,.99);
+}
+.filter_item.condensed_width{
+    width:9.5rem;
 }
 .filter_item .filter_item_label {
     padding:1rem 2rem 1rem 1rem;
@@ -311,11 +322,6 @@ ul{
 .filter_item_form__input:focus{
     outline:0;
 }
-.filter_item.open{
-    width:28rem;
-    border-radius:3px 3px 0px 0px;
-    transition:0.2s width cubic-bezier(.74,-0.01,.29,.99);
-}
 .angle_filter_box{
     position: absolute;
     right: 0.7rem;
@@ -324,6 +330,7 @@ ul{
     top: 1.05rem;
     transform:rotate(0deg);
     transition:0.2s transform ease-in-out;
+    pointer-events: none;
 }
 .filter_item.open .angle_filter_box{
     transform:rotate(-180deg);
@@ -344,6 +351,7 @@ ul{
 
 .filter_item .filter_list{
     position: absolute;
+    z-index:1;
     width: 100%;
     max-height:200px;
     overflow-y: auto;

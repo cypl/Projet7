@@ -253,22 +253,109 @@ function displayFilters(recipes){
 }
 
 
+
 // Ouvrir / ferme un filtre
 const filters = document.getElementsByClassName("filter_item_label");
 // Ouvrir le filtre
 for(let f of filters){
-    // Ouvrir un des onglets du filtre
-    f.addEventListener('click', function (event) {
-        //Ouvrir
+    // Ouvrir un des filtres dropdown
+    //f.addEventListener('click', function (event) {
+    f.onclick = (event) => { 
+        // Elément parent du filtre cliqué
         let filterClicked = event.target.parentNode;
+
+        // Les autres filtres se rétrécissent pour laisser la place
+        const filtersContainer = document.getElementsByClassName("filter_item");
+        for(let fi of filtersContainer){
+            if(fi != filterClicked){
+                fi.classList.add("condensed_width");
+            }
+        }
+
+        // Le filtre cliqué s'ouvre
         filterClicked.classList.add("open");
         filterClicked.childNodes[3].style.display = "none"; // label P
         filterClicked.childNodes[5].childNodes[3].style.display = "block"; // input
-        //Fermer
+        
+
+        //Fermer le filtre
         filterClicked.addEventListener("mouseleave", function( event ) {
+            for(let fi of filtersContainer){
+                if(fi != filterClicked){
+                    fi.classList.remove("condensed_width");
+                }
+            }
             filterClicked.classList.remove("open");
             filterClicked.childNodes[3].style.display = "block"; // label P
             filterClicked.childNodes[5].childNodes[3].style.display = "none"; // input
         });
-    });
+
+        // document.body.onclick = (event) => {
+        //     if(!event.target.parentNode.isSameNode(filterClicked) && !event.target.classList.contains("filter_list_item")){
+        //         console.log("on peut fermer");
+        //         for(let fi of filtersContainer){
+        //             if(fi != filterClicked){
+        //                 fi.classList.remove("condensed_width");
+        //             }
+        //         }
+        //         filterClicked.classList.remove("open");
+        //         filterClicked.childNodes[3].style.display = "block"; // label P
+        //         filterClicked.childNodes[5].childNodes[3].style.display = "none"; // input
+        //     }
+        // }
+    };
 }
+
+
+// let clickCount = 0;
+// function closeFilter(event) {
+//     clickCount++;
+//     console.log(clickCount);
+//     const filtersContainer = document.getElementsByClassName("filter_item");
+//     const filterContainerOpen = document.querySelector(".filter_item.open");
+//     if(!event.target.parentNode.isSameNode(filterContainerOpen) && !event.target.classList.contains("filter_list_item")){
+//         console.log("on peut fermer");
+//         for(let fi of filtersContainer){
+//             if(fi != filterContainerOpen){
+//                 fi.classList.remove("condensed_width");
+//             }
+//         }
+//         filterContainerOpen.classList.remove("open");
+//         filterContainerOpen.childNodes[3].style.display = "block"; // label P
+//         filterContainerOpen.childNodes[5].childNodes[3].style.display = "none"; // input
+//     }
+//     // if(clickCount == 1) {
+//     //    // to remove
+//     //    document.body.removeEventListener('click', closeFilter, false);
+//     // }
+// }
+
+// // to add
+// document.body.addEventListener('click', closeFilter);
+
+
+
+
+
+//Fermer le filtre
+// document.body.onclick = (event) => {
+//     const filtersContainer = document.getElementsByClassName("filter_item");
+//     const filterContainerOpen = document.querySelector(".filter_item.open");
+//     // if(!event.target.parentNode.isSameNode(filterContainerOpen)){
+//     //     console.log("on peut fermer");
+//     // }
+//     // if(!event.target.parentNode.classList.contains("open")){
+//     //     console.log("on peut fermer");
+//     // }
+//     if(!event.target.parentNode.isSameNode(filterContainerOpen) && !event.target.classList.contains("filter_list_item")){
+//         console.log("on peut fermer");
+//         for(let fi of filtersContainer){
+//             if(fi != filterContainerOpen){
+//                 fi.classList.remove("condensed_width");
+//             }
+//         }
+//         filterContainerOpen.classList.remove("open");
+//         filterContainerOpen.childNodes[3].style.display = "block"; // label P
+//         filterContainerOpen.childNodes[5].childNodes[3].style.display = "none"; // input
+//     }
+// }
