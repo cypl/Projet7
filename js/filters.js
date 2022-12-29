@@ -136,6 +136,19 @@ function interactFilterList(criteria, filtersSelected){
     }
 }
 
+class SelectedFilter{
+    constructor(name, classname){
+        this.name = name;
+        this.classname = classname;
+    }
+    createSelectedFilter(){
+        let filtersSelectedItem = document.createElement("li");
+        filtersSelectedItem.classList.add("filter_item_selected");
+        filtersSelectedItem.classList.add(this.classname);
+        filtersSelectedItem.textContent = this.name;
+        return filtersSelectedItem;
+    }
+}
 
 // On crée une fonction qui va afficher les filtres sélectionnés sous le champ de recherche, sous la forme de tags cliquables
 function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
@@ -147,25 +160,13 @@ function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppli
     filtersSelectedWrapper.setAttribute("id","filters_selected_list");
     filtersWrapper.prepend(filtersSelectedWrapper);
     for(let ingredient of filtersSelectedIngredients){
-        let filtersSelectedItem = document.createElement("li");
-        filtersSelectedItem.classList.add("filter_item_selected");
-        filtersSelectedItem.classList.add("selected_ingredient");
-        filtersSelectedItem.textContent = ingredient;
-        filtersSelectedWrapper.append(filtersSelectedItem);
+        filtersSelectedWrapper.append(new SelectedFilter(ingredient, "selected_ingredient").createSelectedFilter());
     }
     for(let appliance of filtersSelectedAppliance){
-        let filtersSelectedItem = document.createElement("li");
-        filtersSelectedItem.classList.add("filter_item_selected");
-        filtersSelectedItem.classList.add("selected_appliance");
-        filtersSelectedItem.textContent = appliance;
-        filtersSelectedWrapper.append(filtersSelectedItem);
+        filtersSelectedWrapper.append(new SelectedFilter(appliance, "selected_appliance").createSelectedFilter());
     }
     for(let ustensil of filtersSelectedUstensils){
-        let filtersSelectedItem = document.createElement("li");
-        filtersSelectedItem.classList.add("filter_item_selected");
-        filtersSelectedItem.classList.add("selected_ustensil");
-        filtersSelectedItem.textContent = ustensil;
-        filtersSelectedWrapper.append(filtersSelectedItem);
+        filtersSelectedWrapper.append(new SelectedFilter(ustensil, "selected_ustensil").createSelectedFilter());
     }
 }
 
