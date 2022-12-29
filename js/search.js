@@ -1,3 +1,6 @@
+const TOOLTIP = new ToolTip(search);
+const LOGGER = new Logger();
+
 // On crée une fonction qui nettoie l'expression du champ de recherche, en retirant les caractères spéciaux
 function cleanInputValue(expression){
     // on retire les caractères spéciaux de l'expression de recherche
@@ -5,12 +8,34 @@ function cleanInputValue(expression){
     let expressionClean = expression.replace(regex, '');
     // si l'expression contient un caractère spécial, on affiche un message d'erreur
     if(expression.match(regex)){
-        printMessageErrorExpression();
+        //printMessageErrorExpression();
+        TOOLTIP.showMessageError("Les caractères spéciaux <br>ne seront pas pris en compte <br>dans votre recherche.");
     } else {
         //remove message
-        removeMessageErrorExpression();
+        //removeMessageErrorExpression();
+        TOOLTIP.hideMessageError();
     }
     return expressionClean;
+}
+
+// On crée une fonction pour gérer ces messages d'erreur
+function manageMessagesFromSearch(inputValue, recipesArray){
+    // Si l'utilisateur n'a rien écrit
+    if(inputValue.length == 0){
+        LOGGER.beforeSearch(recipes);
+    }
+    // Si l'utilisateur a écrit un texte trop court
+    if(inputValue.length < 3 && inputValue.length > 0){
+        LOGGER.requiredSearch();
+    }
+    // Si l'utilisateur a écrit un texte assez long
+    if(inputValue.length >= 3){ // si l'input contient plus de 3 caractères
+        if(searchByText(inputValue).length > 0){ // si le tableau de résultats de recherche contient quelquechose
+            LOGGER.successfulSearch(inputValue, recipesArray);
+        }else {
+            LOGGER.noResultsSearch(inputValue);
+        }
+    }
 }
 
 // On crée une fonction pour chaque test de la fonction searchByText();

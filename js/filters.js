@@ -328,16 +328,17 @@ for(let f of filters){
 //Fermer le filtre
 document.body.onclick = (event) => {
     const filtersContainer = document.getElementsByClassName("filter_item");
-    const filterContainerOpen = document.querySelector(".filter_item.open");
-    if(!event.target.parentNode.isSameNode(filterContainerOpen) && !event.target.classList.contains("filter_list_item")){
-        console.log("on peut fermer");
-        for(let fi of filtersContainer){
-            if(fi != filterContainerOpen){
-                fi.classList.remove("condensed_width");
+    if(document.querySelector(".filter_item.open")){
+        const filterContainerOpen = document.querySelector(".filter_item.open");
+        if(!event.target.parentNode.isSameNode(filterContainerOpen) && !event.target.classList.contains("filter_list_item")){
+            for(let fi of filtersContainer){
+                if(fi != filterContainerOpen){
+                    fi.classList.remove("condensed_width");
+                }
             }
+            filterContainerOpen.classList.remove("open");
+            filterContainerOpen.childNodes[3].style.display = "block"; // label P
+            filterContainerOpen.childNodes[5].childNodes[3].style.display = "none"; // input
         }
-        filterContainerOpen.classList.remove("open");
-        filterContainerOpen.childNodes[3].style.display = "block"; // label P
-        filterContainerOpen.childNodes[5].childNodes[3].style.display = "none"; // input
     }
 }
