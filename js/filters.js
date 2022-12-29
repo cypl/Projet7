@@ -88,6 +88,8 @@ function stringFirstLetterUppercase(string){
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
 
+
+
 // On crée une fonction pour constuire la liste des filtres, en fonction des données du tableau de résultat, 
 // et du critère du filtre, ex : "ingredients"
 // datasFilterCriteria[] est un tableau de données, criteria est juste une string
@@ -95,20 +97,13 @@ function generateFilterList(datasFilterCriteria, criteria){
     // on supprime les éléments qui pourrait rester d'un chargement précédent
     if(document.getElementById(criteria + "_list")){document.getElementById(criteria + "_list").remove();}
     // on construit le filtre
-    const filterCriteriaList = document.createElement("ul");
-    filterCriteriaList.setAttribute("id", criteria + "_list");
-    filterCriteriaList.classList.add("filter_list");
     const filterWrapper = document.getElementById("filter_" + criteria);
-    filterWrapper.append(filterCriteriaList);
-    // on ajoute les différents items du filtre, en fonction des données du tableau recipesArray[]
+    filterWrapper.append(new FilterItemsList(criteria).createFilterItemsList());
+    // on ajoute les différents items du filtre, en fonction des données du tableau
     let filterItemsData = datasFilterCriteria;
     for(let data of filterItemsData){
-        let filterItem = document.createElement("li");
-        filterItem.classList.add("ingredient_item");
-        filterItem.classList.add("filter_list_item");
-        filterItem.classList.add("filter_list_item--" + criteria);
-        filterItem.textContent = stringFirstLetterUppercase(data);
-        filterCriteriaList.append(filterItem);
+        const filterCriteriaList = document.getElementById(criteria + "_list");
+        filterCriteriaList.append(new FilterItem(data, criteria).createFilterItem());
     }
 }
 
