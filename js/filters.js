@@ -136,19 +136,6 @@ function interactFilterList(criteria, filtersSelected){
     }
 }
 
-class SelectedFilter{
-    constructor(name, classname){
-        this.name = name;
-        this.classname = classname;
-    }
-    createSelectedFilter(){
-        let filtersSelectedItem = document.createElement("li");
-        filtersSelectedItem.classList.add("filter_item_selected");
-        filtersSelectedItem.classList.add(this.classname);
-        filtersSelectedItem.textContent = this.name;
-        return filtersSelectedItem;
-    }
-}
 
 // On crée une fonction qui va afficher les filtres sélectionnés sous le champ de recherche, sous la forme de tags cliquables
 function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
