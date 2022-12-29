@@ -3,63 +3,28 @@ const messages = document.getElementById("messages");
 const results = document.getElementById("results");
 
 
+
+const LOGGER = new Logger();
+
 // On crée une fonction qui affiche un message par défaut, avant la recherche de l'utilisateur
 // Par exemple, le nombre total de recettes que le site contient.
 function printMessageBeforeSearch(){
-    // On supprime le message d'alerte précédent
-    removePreviousMessageAlert();
-    const messageBeforeSearch = document.createElement("p");
-    messageBeforeSearch.setAttribute("id","message-before-search");
-    messageBeforeSearch.classList.add("message_alert");
-    messageBeforeSearch.innerHTML = "Les Petits Plats vous propose <strong>" + recipes.length + " recettes</strong>, cherchez la bonne !"; 
-    messages.append(messageBeforeSearch);
+    LOGGER.beforeSearch(recipes);
 }
-
 
 // On crée une fonction qui affiche un message pour péciser à l'utilisateur qu'il faut saisir au moins 3 caractères dans sa recherche.
 function printMessageRequiredSearch(){
-    // On supprime le message d'alerte précédent
-    removePreviousMessageAlert();
-    if(!document.getElementById("message-during-search")){
-        const messageRequiredSearch = document.createElement("p");
-        messageRequiredSearch.setAttribute("id","message-during-search");
-        messageRequiredSearch.classList.add("message_alert");
-        messageRequiredSearch.innerHTML = "La recherche doit contenir au moins <strong>3 caractères.</strong>"; 
-        messages.append(messageRequiredSearch);
-    }
+    LOGGER.requiredSearch();
 }
-
 
 // On crée une fonction qui affiche un message pour péciser à l'utilisateur le nombre de résultats obtenus avec la recherche.
 function printMessageSuccessfulSearch(expression, recipesArray){
-    // On supprime le message d'alerte précédent
-    removePreviousMessageAlert();
-    if(!document.getElementById("message-successful-search")){
-        const messageSuccessfulSearch = document.createElement("p");
-        messageSuccessfulSearch.setAttribute("id","message-successful-search");
-        messageSuccessfulSearch.classList.add("message_alert");
-        let resultCount = recipesArray.length;
-        if(resultCount == 1){
-            messageSuccessfulSearch.innerHTML = "Il y a <strong>" + `${resultCount}` + " résultat</strong> de recherche pour <strong>" + `${expression}` + "</strong>."; 
-        } else {
-            messageSuccessfulSearch.innerHTML = "Il y a <strong>" + `${resultCount}` + " résultats</strong> de recherche pour <strong>" + `${expression}` + "</strong>."; 
-        }
-        messages.append(messageSuccessfulSearch);
-    }
+    LOGGER.successfulSearch(expression, recipesArray);
 }
-
 
 // On crée une fonction qui affiche un message d'erreur, dans le cas où aucun résultat de recherche n'existe.
 function printMessageNoResultsFound(expression){
-    // On supprime le message d'alerte précédent
-    removePreviousMessageAlert();
-    if(!document.getElementById("message-no-results-found")){
-        const messageNoResultsFound = document.createElement("p");
-        messageNoResultsFound.setAttribute("id","message-no-results-found");
-        messageNoResultsFound.classList.add("message_alert");
-        messageNoResultsFound.innerHTML = "Aucune recette ne correspond à <strong>" + `${expression}` + "</strong>."; 
-        messages.append(messageNoResultsFound);
-    }
+    LOGGER.noResultsSearch(expression);
 }
 
 
@@ -74,11 +39,6 @@ function removeMessageErrorExpression(){
     TOOLTIP.hideMessageError();
 }
 
-
-// On crée une fonction pour supprimer le message d'erreur précédent
-function removePreviousMessageAlert(){
-    if(messages.querySelector(".message_alert")){messages.querySelector(".message_alert").remove();}
-}
 
 
 // On crée une fonction pour gérer ces messages d'erreur
