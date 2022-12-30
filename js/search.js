@@ -113,16 +113,6 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
 
 
 function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
-    // On sort d'abord les résultats de la recherche par texte
-    // const recipesFromSearch = searchByText(inputValue);
-    // On précise ensuite la recherche avec les filtres
-    // const recipesFromFilters = searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-
-    // const recipesResults = recipesFromSearch - recipesFromFilters;
-    // On retire les recettes correspondantes aux filtres
-    // const recipesResults = recipesFromSearch.filter(n => recipesFromFilters.includes(n));
-    // console.log(recipesResults);
-
     // Si la recherche contient du texte
     let searchHasText;
     if(inputValue.length >= 3){
