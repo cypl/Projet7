@@ -422,25 +422,7 @@ ul{
 /* Liste des filtres sélectionnés */
 #filters_selected_list{
     width:100%;
-    padding-bottom: 0.5rem;
-}
-#filters_selected_list.open_selected_list{
-    animation-duration: 0.2s; /* durée de l'animation */
-    animation-timing-function: ease-in-out; /* type de easing */
-    animation-iteration-count: 1; /* nombre de fois où l'animation est jouée */
-    animation-delay: 0s;
-    animation-name: openSelectedList; /* appel keyframes */
-    animation-fill-mode: forwards;
-    animation-direction: normal;
-}
-@keyframes openSelectedList {
-    0% {
-        min-height: 0;
-    }
-    100% {
-        min-height: 2rem;
-
-    }
+    /* padding-bottom: 0.5rem; */
 }
 .popOut{
     animation-duration: 0.25s; /* durée de l'animation */

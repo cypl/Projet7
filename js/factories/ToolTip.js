@@ -22,5 +22,4 @@ class ToolTip{
             e.style.display = "none";
         }, 250);
     }
-
 }

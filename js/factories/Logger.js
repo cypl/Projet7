@@ -18,7 +18,26 @@ class Logger{
             this.logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour <strong> ${pExpression} </strong>.`; 
         }
     }
+    successfulSearchAndFilter(pExpression, pRecipesResults){
+        let resultCount = pRecipesResults.length;
+        if(resultCount == 1){
+            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour <strong> ${pExpression} </strong> et les filtres sélectionnés.`; 
+        } else {
+            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour <strong> ${pExpression} </strong> et les filtres sélectionnés.`; 
+        }
+    }
+    successfulFilter(pRecipesResults){
+        let resultCount = pRecipesResults.length;
+        if(resultCount == 1){
+            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour les filtres sélectionnés.`; 
+        } else {
+            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour les filtres sélectionnés.`; 
+        }
+    }
     noResultsSearch(pExpression){
         this.logger.innerHTML = `Aucune recette ne correspond à <strong> ${pExpression} </strong>.`; 
+    }
+    noResultsFilter(){
+        this.logger.innerHTML = `Aucune recette ne correspond à votre recherche.`; 
     }
 }

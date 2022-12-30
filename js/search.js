@@ -8,11 +8,8 @@ function cleanInputValue(expression){
     let expressionClean = expression.replace(regex, '');
     // si l'expression contient un caractère spécial, on affiche un message d'erreur
     if(expression.match(regex)){
-        //printMessageErrorExpression();
         TOOLTIP.showMessageError("Les caractères spéciaux <br>ne seront pas pris en compte <br>dans votre recherche.");
     } else {
-        //remove message
-        //removeMessageErrorExpression();
         TOOLTIP.hideMessageError();
     }
     return expressionClean;
@@ -117,39 +114,83 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
 
 function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
     // On sort d'abord les résultats de la recherche par texte
-    const recipesFromSearch = searchByText(inputValue);
+    // const recipesFromSearch = searchByText(inputValue);
     // On précise ensuite la recherche avec les filtres
-    const recipesFromFilters = searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    // const recipesFromFilters = searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
 
     // const recipesResults = recipesFromSearch - recipesFromFilters;
     // On retire les recettes correspondantes aux filtres
-    const recipesResults = recipesFromSearch.filter(n => recipesFromFilters.includes(n));
-    console.log(recipesResults);
+    // const recipesResults = recipesFromSearch.filter(n => recipesFromFilters.includes(n));
+    // console.log(recipesResults);
+
+    // Si la recherche contient du texte
+    let searchHasText;
+    if(inputValue.length >= 3){
+        searchHasText = true;
+    } else {
+        searchHasText = false;
+    }
+    // Si la recherche contient des filtres
+    let searchHasFilters;
+    if(filtersSelectedIngredients.length > 0 || filtersSelectedAppliance.length > 0 || filtersSelectedUstensils.length > 0){
+        searchHasFilters = true;
+    } else {
+        searchHasFilters = false;
+    }
+    // Les résultats seront listés dans un tableau recipesResults[]
+    const recipesResults = [];
+    // 1 - s'il y a une recherche texte mais pas de filtre
+    if(searchHasText && !searchHasFilters){
+        for (let i of searchByText(inputValue)){
+            recipesResults.push(i);
+        }
+    } 
+    // 2 - S'il n'y a pas de recherche texte mais des filtres
+    if(!searchHasText && searchHasFilters){
+        const recipesFromFilters = searchByFilters(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        for (let i of recipesFromFilters){
+            recipesResults.push(i);
+        }
+    }
+    // 3 - S'il y a une recherche texte et des filtres 
+    if(searchHasText && searchHasFilters) {
+        console.log("il reste ça à coder !");
+    }
     return recipesResults; 
 }
 
 
-function showResultsMessage(){
-    const searchField = document.getElementById("search_main");
-    let inputValue = cleanInputValue(searchField.value);
-    // s'il n'y a pas de filtres
-    if(!document.getElementById("filters_selected_list")){
-        console.log("On affiche un message de résultats, il n'y a pas de filtres.");
-        // s'il n'y a aucune recherche texte
-        // if(!inputValue.length){console.log("il n'y a aucune recherche texte")}
-        // s'il y a une recherche texte insuffisante
-        // if(inputValue.length < 3 && inputValue.length > 0){console.log("s'il y a une recherche texte insuffisante")}
-        // s'il y a une recherche texte suffisante et des résultats
-        // if(inputValue.length >= 3){console.log("s'il y a une recherche texte suffisante")}
-        // s'il y a une recherche texte suffisante mais aucun résultats
-    } 
-    // s'il y a des filtres
-    else {
-        console.log("On affiche un message de résultats, il y a des filtres.");
-        // s'il n'y a aucune recherche texte
-        // s'il y a une recherche texte insuffisante
-        // s'il y a une recherche texte suffisante et des résultats
-        // s'il y a une recherche texte suffisante mais aucun résultats
+function displayLogger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+    // Si la recherche contient des filtres
+    let searchHasFilters;
+    if(filtersSelectedIngredients.length > 0 || filtersSelectedAppliance.length > 0 || filtersSelectedUstensils.length > 0){
+        searchHasFilters = true;
+    } else {
+        searchHasFilters = false;
+    }
+    // si la recherche existe mais n'est pas valable
+    if(inputValue.length < 3 && inputValue.length > 0 ){
+        LOGGER.requiredSearch();
+    }
+    // si la recherche est valable et qu'il n'y a pas de filtres
+    if(inputValue.length >= 3 && !searchHasFilters){
+        if(recipesResults.length > 0){
+            LOGGER.successfulSearch(inputValue, recipesResults);
+        } else {
+            LOGGER.noResultsSearch(inputValue);
+        }
+    }
+    // si la recherche est valable et qu'il y a des filtres
+    if(inputValue.length >= 3 && searchHasFilters){
+        if(recipesResults.length > 0){
+            LOGGER.successfulSearchAndFilter(inputValue, recipesResults);
+        } else {
+            LOGGER.noResultsSearch(inputValue);
+        }
+    }
+    // si la recherche est vide et qu'il y a des filtres
+    if(!inputValue.length && searchHasFilters){
+        LOGGER.successfulFilter(recipesResults);
     }
 }
 
@@ -166,38 +207,4 @@ function displayRecipes(recipesArray){
     for(let recipe of recipesArray){
         results.append(new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).createCard());
     }
-    showResultsMessage();
 }
-
-
-// On crée un écouteur sur le champ de recherche
-const searchField = document.getElementById("search_main");
-searchField.value = "";
-searchField.addEventListener('input', function (event) {
-    
-    // Si des filtres sont déjà sélectionnés, on les retire
-    removeAllSelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-
-    let inputValue = cleanInputValue(this.value); // expression
-    // On lance la fonction de recherche searchByText()
-    // elle retourne un Array avec les résultats
-    // et a partir de cet Array on peut afficher les résultats
-    if(inputValue.length >= 3){
-        let recipesFromSearch = searchByText(inputValue);
-        if(recipesFromSearch.length > 0){
-            displayFilters(recipesFromSearch);
-            displayRecipes(recipesFromSearch);
-        } else {
-            displayFilters(recipes);
-            displayRecipes(recipes);
-        }
-    } else {
-        displayFilters(recipes);
-        displayRecipes(recipes);
-    }
-
-    // Gestion des messages avant/erreur/succès
-    let recipesFromSearch = searchByText(inputValue);
-    manageMessagesFromSearch(inputValue, recipesFromSearch);
-
-});
