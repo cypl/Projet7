@@ -154,7 +154,12 @@ function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersS
     }
     // 3 - S'il y a une recherche texte et des filtres 
     if(searchHasText && searchHasFilters) {
-        console.log("il reste ça à coder !");
+        const recipesFromSearch = searchByText(inputValue);
+        const recipesFromFilters = searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        const recipesFromSearchAndFilters = recipesFromSearch.filter(n => recipesFromFilters.includes(n));
+        for (let i of recipesFromSearchAndFilters){
+            recipesResults.push(i);
+        }
     }
     return recipesResults; 
 }
