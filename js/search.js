@@ -93,7 +93,6 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
     const searchField = document.getElementById("search_main");
     let inputValue = cleanInputValue(searchField.value);
     recipesFromSearch = searchByText(inputValue);
-    
     // On retire les recettes de recipesFromSearch[] qui ne correspondent pas aux filtres 
     // 1 - Filtres Ingrédients
     const filtersSelectedIngredientsLowerCase = filtersSelectedIngredients.map(ingredients => { return ingredients.toLowerCase() });
@@ -112,6 +111,7 @@ function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersS
 }
 
 
+// On crée une fonction qui génère les résultats (array) en fonction des différents cas de figure possibles
 function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
     // Si la recherche contient du texte
     let searchHasText;
@@ -155,6 +155,7 @@ function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersS
 }
 
 
+// On crée une fonction displayLogger() qui affiche les messages en fonction des résultats
 function displayLogger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
     // Si la recherche contient des filtres
     let searchHasFilters;
