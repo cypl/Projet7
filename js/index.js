@@ -127,6 +127,18 @@ function removeFilterHandler(event){
         const searchField = document.getElementById("search_main");
         let inputValue = cleanInputValue(searchField.value);
         const recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        // On met à jour les listes de filtres disponibles en fonction des résultats
+        setTimeout(function(){
+            if(recipesResults.length > 0){
+                updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+            } else {
+                updateFiltersList(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+            }
+            const filtersItems = document.getElementsByClassName("filter_list_item");
+            for(let filtersItem of filtersItems){
+                filtersItem.addEventListener('click', addFilterHandler);
+            }
+        }, 700);
         // On génère les fiches liées aux résultats
         displayRecipes(recipesResults);
         // On affiche le logger en conséquence du résultat

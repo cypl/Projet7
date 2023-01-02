@@ -5,7 +5,7 @@ function datasFilterIngredients(recipes){
         let listIngredients = recipe.ingredients;
         for(let ingredient of listIngredients){
             let ingredientItem = ingredient.ingredient;
-            // ingredientItem = ingredientItem.toLowerCase();
+            ingredientItem = ingredientItem.toLowerCase();
             datasIngredients.push(ingredientItem);
         }
     }
@@ -33,7 +33,8 @@ function datasFilterUstensils(recipes){
     for(let recipe of recipes){
         let listUtensils = recipe.ustensils;
         for(let ustensil of listUtensils){
-            datasUtensils.push(ustensil);
+            ustensilItem = ustensil.toLowerCase();
+            datasUtensils.push(ustensilItem);
         }
     }
     // On enlève les doublons
