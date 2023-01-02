@@ -10,7 +10,9 @@ function datasFilterIngredients(recipes){
         }
     }
     // On enlève les doublons
-    datasIngredientsNoDuplicates = [...new Set(datasIngredients)];
+    datasIngredientsNoDuplicates = [...new Set(datasIngredients)].sort(function (a, b) {
+        return a.localeCompare(b);
+      }); // sort() permet de classer par ordre alphabétique, et la localeCompare() de tenir compte des caractères accentués
     return datasIngredientsNoDuplicates;
 }
 
@@ -22,7 +24,9 @@ function datasFilterAppliance(recipes){
         datasAppliance.push(recipe.appliance);
     }
     // On enlève les doublons
-    datasApplianceNoDuplicates = [...new Set(datasAppliance)];
+    datasApplianceNoDuplicates = [...new Set(datasAppliance)].sort(function (a, b) {
+        return a.localeCompare(b);
+      }); // sort() permet de classer par ordre alphabétique, et la localeCompare() de tenir compte des caractères accentués
     return datasApplianceNoDuplicates;
 }
 
@@ -38,7 +42,9 @@ function datasFilterUstensils(recipes){
         }
     }
     // On enlève les doublons
-    datasUtensilsNoDuplicates = [...new Set(datasUtensils)];
+    datasUtensilsNoDuplicates = [...new Set(datasUtensils)].sort(function (a, b) {
+        return a.localeCompare(b);
+      }); // sort() permet de classer par ordre alphabétique, et la localeCompare() de tenir compte des caractères accentués
     return datasUtensilsNoDuplicates;
 }
 
