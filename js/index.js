@@ -32,13 +32,11 @@ searchField.addEventListener('input', function (event) {
     let inputValue = cleanInputValue(this.value); // expression
     let recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     // On met à jour les listes de filtres disponibles en fonction des résultats
-    setTimeout(function(){
-        updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-        const filtersItems = document.getElementsByClassName("filter_list_item");
-        for(let filtersItem of filtersItems){
-            filtersItem.addEventListener('click', addFilterHandler);
-        }
-    }, 1000);
+    updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    const filtersItems = document.getElementsByClassName("filter_list_item");
+    for(let filtersItem of filtersItems){
+        filtersItem.addEventListener('click', addFilterHandler);
+    }
     // On génère les fiches liées aux résultats
     displayRecipes(recipesResults);
     // On affiche le logger en conséquence du résultat
@@ -53,6 +51,7 @@ searchField.addEventListener('input', function (event) {
 // On met à jour les listes de filtres disponibles en fonction des résultats
 // On génère les fiches liées aux résultats
 // On affiche le message en conséquence du résultat
+// On donne la possibilité de déselectionner un filtre 
 
 function addFilterHandler(event){
     event.target.classList.add("selected_filter");
@@ -79,16 +78,58 @@ function addFilterHandler(event){
         for(let filtersItem of filtersItems){
             filtersItem.addEventListener('click', addFilterHandler);
         }
-    }, 1000);
+    }, 700);
     // On génère les fiches liées aux résultats
     displayRecipes(recipesResults);
     // On affiche le logger en conséquence du résultat
     displayLogger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    // On donne la possibilité de déselectionner un filtre 
+    const filtersSelectedItems = document.getElementsByClassName("filter_item_selected");
+    if(filtersSelectedItems){
+        for(let filtersSelectedItem of filtersSelectedItems){
+            filtersSelectedItem.addEventListener('click', removeFilterHandler);
+        }
+    }
+
 }
 
 const filtersItems = document.getElementsByClassName("filter_list_item");
 if(filtersItems){
     for(let filtersItem of filtersItems){
         filtersItem.addEventListener('click', addFilterHandler);
+    }    
+}
+
+
+
+// Quand on retire un filtre :
+// On génère les résultats (tableau)
+// On retire le filtre sélectionné sous la barre de recherche
+// On génère les filtres disponibles liés résultats
+// On génère les fiches liées aux résultats
+// On affiche le message en conséquence du résultat
+
+function removeFilterHandler(event){
+    // On retire le filtre sélectionné sous la barre de recherche
+    // le clic sur un filtre sélectionné déclenche la fonction updateFilter();
+    const filtersSelectedItems = document.getElementsByClassName("filter_item_selected");
+    if(filtersSelectedItems){
+        if(event.target.classList.contains("selected_ingredient")){
+            updateFilter(event.target, filtersSelectedItems, filtersSelectedIngredients, "filter_list_item--ingredients");
+        }
+        if(event.target.classList.contains("selected_appliance")){
+            updateFilter(event.target, filtersSelectedItems, filtersSelectedAppliance, "filter_list_item--appliance");
+        }
+        if(event.target.classList.contains("selected_ustensil")){
+            updateFilter(event.target, filtersSelectedItems, filtersSelectedUstensils, "filter_list_item--ustensils");
+        }
+        // On régénère les résultats de la recherche, et on affiche les recettes correspondantes
+        const searchField = document.getElementById("search_main");
+        let inputValue = cleanInputValue(searchField.value);
+        const recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        // On génère les fiches liées aux résultats
+        displayRecipes(recipesResults);
+        // On affiche le logger en conséquence du résultat
+        displayLogger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     }
 }
