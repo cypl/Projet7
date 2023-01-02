@@ -32,7 +32,11 @@ searchField.addEventListener('input', function (event) {
     let inputValue = cleanInputValue(this.value); // expression
     let recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     // On met à jour les listes de filtres disponibles en fonction des résultats
-    updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    if(recipesResults.length > 0){
+        updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    } else {
+        updateFiltersList(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    }
     const filtersItems = document.getElementsByClassName("filter_list_item");
     for(let filtersItem of filtersItems){
         filtersItem.addEventListener('click', addFilterHandler);

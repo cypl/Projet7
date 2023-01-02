@@ -188,6 +188,10 @@ function displayLogger(inputValue, recipesResults, filtersSelectedIngredients, f
     if(!inputValue.length && searchHasFilters){
         LOGGER.successfulFilter(recipesResults);
     }
+    // si la recherche est vide et qu'il y a des filtres
+    if(!inputValue.length && !searchHasFilters){
+        LOGGER.beforeSearch(recipes);
+    }
 }
 
 
