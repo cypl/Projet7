@@ -152,17 +152,24 @@ function removeFilterHandler(event){
 
 
 // On peut rechercher des tags, dans les dropdowns
-let filterDropDownField = document.getElementById("search_ingredient");
-filterDropDownField.value = "";
-let filterSearchListItems = document.getElementsByClassName("filter_list_item--ingredients");
+const filterDropDownFields = document.getElementsByClassName("filter_item_form__input");
+for(let i of filterDropDownFields){
+    i.addEventListener('input', function(event){
+        if(i.getAttribute("id") === "search_ingredient"){
+            searchInDropDown("search_ingredient", "filter_list_item--ingredients", "ingredients_list");
+        }
+        if(i.getAttribute("id") === "search_appliance"){
+            searchInDropDown("search_appliance", "filter_list_item--appliance", "appliance_list");
+        }
+        if(i.getAttribute("id") === "search_ustensils"){
+            searchInDropDown("search_ustensils", "filter_list_item--ustensils", "ustensils_list");
+        }
+    });
+}
 
-filterDropDownField.addEventListener('input', function(event){
-    searchInDropDown("search_ingredient", "filter_list_item--ingredients", "ingredients_list");
-});
 
 function searchInDropDown(field, listItems, listItemsWrapper){ //"search_ingredient", "filter_list_item--ingredients", "ingredients_list"
     let filterDropDownField = document.getElementById(field);
-    // filterDropDownField.value = "";
     let filterSearchListItems = document.getElementsByClassName(listItems);
     let filterSearchFieldValue = cleanInputValue(filterDropDownField.value);
     let filterListArray = [];
