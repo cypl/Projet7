@@ -205,6 +205,6 @@ function displayRecipes(recipesArray){
     }
     // Sinon on affiche les résultats correspondants
     for(let recipe of recipesArray){
-        results.append(new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).createCard());
+        new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).createCard();
     }
 }

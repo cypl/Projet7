@@ -74,6 +74,6 @@ class RecipeCard {
         recipeContent.append(recipeDescription);
         recipeInfosWrapper.append(recipeContent);
         
-        return recipeCard;
+        results.append(recipeCard);
     }
 }

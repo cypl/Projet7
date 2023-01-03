@@ -149,3 +149,48 @@ function removeFilterHandler(event){
         displayLogger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     }
 }
+
+
+// On peut rechercher des tags, dans les dropdowns
+let filterDropDownField = document.getElementById("search_ingredient");
+filterDropDownField.value = "";
+let filterSearchListItems = document.getElementsByClassName("filter_list_item--ingredients");
+
+filterDropDownField.addEventListener('input', function(event){
+    searchInDropDown("search_ingredient", "filter_list_item--ingredients", "ingredients_list");
+});
+
+function searchInDropDown(field, listItems, listItemsWrapper){ //"search_ingredient", "filter_list_item--ingredients", "ingredients_list"
+    let filterDropDownField = document.getElementById(field);
+    // filterDropDownField.value = "";
+    let filterSearchListItems = document.getElementsByClassName(listItems);
+    let filterSearchFieldValue = cleanInputValue(filterDropDownField.value);
+    let filterListArray = [];
+    for(let i of filterSearchListItems){
+        filterListArray.push(i.textContent);
+    }
+    let filterListArrayResult = filterListArray.filter(i => i.includes(filterSearchFieldValue));
+    for(let i of filterSearchListItems){
+        if(filterListArrayResult.includes(i.textContent)){
+            i.style.display = 'block';
+        }else{
+            i.style.display = 'none';
+        }
+    }
+    // Aucun résultat
+    if(!filterListArrayResult.length){
+        if(!document.getElementById("no_result_filter_" + listItemsWrapper)){
+            let noResultFilterDropdown = document.createElement("li");
+            noResultFilterDropdown.setAttribute("id","no_result_filter_" + listItemsWrapper);
+            noResultFilterDropdown.style.fontWeight = "400";
+            noResultFilterDropdown.style.marginTop = "0.5rem";
+            noResultFilterDropdown.textContent = "Aucun résultat disponible.";
+            const filterSearchListWrapper = document.getElementById(listItemsWrapper);
+            filterSearchListWrapper.append(noResultFilterDropdown);
+        }
+    }else{
+        if(document.getElementById("no_result_filter_" + listItemsWrapper)){
+            document.getElementById("no_result_filter_" + listItemsWrapper).remove();
+        }
+    }
+}
