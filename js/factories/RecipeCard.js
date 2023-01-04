@@ -5,7 +5,7 @@ class RecipeCard {
         this.ingredients = ingredients;
         this.description = description;
     }
-    createCard(){
+    create(){
         const recipeCard = document.createElement("article");
         recipeCard.classList.add("recipe__card");
         //image

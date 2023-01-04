@@ -197,14 +197,15 @@ function displayLogger(inputValue, recipesResults, filtersSelectedIngredients, f
 
 // On crée une fonction pour afficher les recettes, en fonction d'un Array de recettes
 function displayRecipes(recipesArray){
-    // On supprime les résultats en cours
-    if(results.querySelector("article")){results.innerHTML = "";} 
-    // Dans le cas où la recherche ne donne rien, on affiche la liste complète des recettes par défaut
-    if(recipesArray.length == 0){
-        recipesArray = recipes;
-    }
-    // Sinon on affiche les résultats correspondants
-    for(let recipe of recipesArray){
-        new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).createCard();
-    }
+    // // On supprime les résultats en cours
+    // if(results.querySelector("article")){results.innerHTML = "";} 
+    // // Dans le cas où la recherche ne donne rien, on affiche la liste complète des recettes par défaut
+    // if(recipesArray.length == 0){
+    //     recipesArray = recipes;
+    // }
+    // // Sinon on affiche les résultats correspondants
+    // for(let recipe of recipesArray){
+    //     new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).createCard();
+    // }
+    Display.recipes(recipesArray);
 }

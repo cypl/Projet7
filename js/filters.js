@@ -178,38 +178,3 @@ function removeAllSelectedFilters(filtersSelectedIngredients, filtersSelectedApp
     filtersSelectedUstensils.length = 0;
     displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
 }
-
-
-
-// Ouvrir / ferme un dropdown filtre
-const filters = document.getElementsByClassName("filter_item_label");
-// Ouvrir le filtre
-for(let f of filters){
-    // Ouvrir un des filtres dropdown
-    f.onclick = (event) => { 
-        // Elément parent du filtre cliqué
-        let filterClicked = event.target.parentNode;
-        // Les autres filtres se rétrécissent pour laisser de la place
-        const filtersContainer = document.getElementsByClassName("filter_item");
-        for(let fi of filtersContainer){
-            if(fi != filterClicked){
-                fi.classList.add("condensed_width");
-            }
-        }
-        // Le filtre cliqué s'ouvre
-        filterClicked.classList.add("open");
-        filterClicked.childNodes[3].style.display = "none"; // label P
-        filterClicked.childNodes[5].childNodes[3].style.display = "block"; // input
-        //Fermer le filtre
-        filterClicked.addEventListener("mouseleave", function( event ) {
-            for(let fi of filtersContainer){
-                if(fi != filterClicked){
-                    fi.classList.remove("condensed_width");
-                }
-            }
-            filterClicked.classList.remove("open");
-            filterClicked.childNodes[3].style.display = "block"; // label P
-            filterClicked.childNodes[5].childNodes[3].style.display = "none"; // input
-        });
-    };
-}
