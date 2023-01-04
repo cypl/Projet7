@@ -1,5 +1,4 @@
 const TOOLTIP = new ToolTip(search);
-const LOGGER = new Logger();
 
 // On crée une fonction qui nettoie l'expression du champ de recherche, en retirant les caractères spéciaux
 function cleanInputValue(expression){
@@ -15,25 +14,6 @@ function cleanInputValue(expression){
     return expressionClean;
 }
 
-// On crée une fonction pour gérer ces messages d'erreur
-function manageMessagesFromSearch(inputValue, recipesArray){
-    // Si l'utilisateur n'a rien écrit
-    if(inputValue.length == 0){
-        LOGGER.beforeSearch(recipes);
-    }
-    // Si l'utilisateur a écrit un texte trop court
-    if(inputValue.length < 3 && inputValue.length > 0){
-        LOGGER.requiredSearch();
-    }
-    // Si l'utilisateur a écrit un texte assez long
-    if(inputValue.length >= 3){ // si l'input contient plus de 3 caractères
-        if(searchByText(inputValue).length > 0){ // si le tableau de résultats de recherche contient quelquechose
-            LOGGER.successfulSearch(inputValue, recipesArray);
-        }else {
-            LOGGER.noResultsSearch(inputValue);
-        }
-    }
-}
 
 // On crée une fonction pour chaque test de la fonction searchByText();
 function findInTitle(inputValue, title){
@@ -152,60 +132,4 @@ function generateRecipesResults(inputValue, filtersSelectedIngredients, filtersS
         }
     }
     return recipesResults; 
-}
-
-
-// On crée une fonction displayLogger() qui affiche les messages en fonction des résultats
-function displayLogger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
-    // Si la recherche contient des filtres
-    let searchHasFilters;
-    if(filtersSelectedIngredients.length > 0 || filtersSelectedAppliance.length > 0 || filtersSelectedUstensils.length > 0){
-        searchHasFilters = true;
-    } else {
-        searchHasFilters = false;
-    }
-    // si la recherche existe mais n'est pas valable
-    if(inputValue.length < 3 && inputValue.length > 0 ){
-        LOGGER.requiredSearch();
-    }
-    // si la recherche est valable et qu'il n'y a pas de filtres
-    if(inputValue.length >= 3 && !searchHasFilters){
-        if(recipesResults.length > 0){
-            LOGGER.successfulSearch(inputValue, recipesResults);
-        } else {
-            LOGGER.noResultsSearch(inputValue);
-        }
-    }
-    // si la recherche est valable et qu'il y a des filtres
-    if(inputValue.length >= 3 && searchHasFilters){
-        if(recipesResults.length > 0){
-            LOGGER.successfulSearchAndFilter(inputValue, recipesResults);
-        } else {
-            LOGGER.noResultsSearch(inputValue);
-        }
-    }
-    // si la recherche est vide et qu'il y a des filtres
-    if(!inputValue.length && searchHasFilters){
-        LOGGER.successfulFilter(recipesResults);
-    }
-    // si la recherche est vide et qu'il y a des filtres
-    if(!inputValue.length && !searchHasFilters){
-        LOGGER.beforeSearch(recipes);
-    }
-}
-
-
-// On crée une fonction pour afficher les recettes, en fonction d'un Array de recettes
-function displayRecipes(recipesArray){
-    // // On supprime les résultats en cours
-    // if(results.querySelector("article")){results.innerHTML = "";} 
-    // // Dans le cas où la recherche ne donne rien, on affiche la liste complète des recettes par défaut
-    // if(recipesArray.length == 0){
-    //     recipesArray = recipes;
-    // }
-    // // Sinon on affiche les résultats correspondants
-    // for(let recipe of recipesArray){
-    //     new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).createCard();
-    // }
-    Display.recipes(recipesArray);
 }

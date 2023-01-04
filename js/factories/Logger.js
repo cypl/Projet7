@@ -1,43 +1,60 @@
 class Logger{
-    constructor(){
-        this.logger = document.createElement("p");
-        this.logger.classList.add("message_alert");
-        messages.append(this.logger);
+
+    static init(){
+        const logger = document.createElement("p");
+        logger.classList.add("message_alert");
+        const messages = document.getElementById("messages");
+        messages.append(logger);
     }
-    beforeSearch(pRecipes){ // pRecipes correspond au tableau total des recettes avant le tri.
-        this.logger.innerHTML = `Les Petits Plats vous propose <strong> ${pRecipes.length} recettes</strong>, cherchez la bonne !`;
+
+    static beforeSearch(pRecipes){
+        const logger = document.querySelector(".message_alert");
+        logger.innerHTML = `Les Petits Plats vous propose <strong> ${pRecipes.length} recettes</strong>, cherchez la bonne !`;
     }
-    requiredSearch(){
-        this.logger.innerHTML = `La recherche doit contenir au moins <strong>3 caractères.</strong>`;
+
+    static requiredSearch(){
+        const logger = document.querySelector(".message_alert");
+        logger.innerHTML = `La recherche doit contenir au moins <strong>3 caractères.</strong>`;
     }
-    successfulSearch(pExpression, pRecipesResults){
+
+    static successfulSearch(pExpression, pRecipesResults){
+        const logger = document.querySelector(".message_alert");
         let resultCount = pRecipesResults.length;
         if(resultCount == 1){
-            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour <strong> ${pExpression} </strong>.`; 
+            logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour <strong> ${pExpression} </strong>.`; 
         } else {
-            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour <strong> ${pExpression} </strong>.`; 
+            logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour <strong> ${pExpression} </strong>.`; 
         }
     }
-    successfulSearchAndFilter(pExpression, pRecipesResults){
+
+    static successfulSearchAndFilter(pExpression, pRecipesResults){
+        const logger = document.querySelector(".message_alert");
         let resultCount = pRecipesResults.length;
         if(resultCount == 1){
-            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour <strong> ${pExpression} </strong> et les filtres sélectionnés.`; 
+            logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour <strong> ${pExpression} </strong> et les filtres sélectionnés.`; 
         } else {
-            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour <strong> ${pExpression} </strong> et les filtres sélectionnés.`; 
+            logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour <strong> ${pExpression} </strong> et les filtres sélectionnés.`; 
         }
     }
-    successfulFilter(pRecipesResults){
+
+    static successfulFilter(pRecipesResults){
+        const logger = document.querySelector(".message_alert");
         let resultCount = pRecipesResults.length;
         if(resultCount == 1){
-            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour les filtres sélectionnés.`; 
+            logger.innerHTML = `Il y a <strong> ${resultCount} résultat</strong> de recherche pour les filtres sélectionnés.`; 
         } else {
-            this.logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour les filtres sélectionnés.`; 
+            logger.innerHTML = `Il y a <strong> ${resultCount} résultats</strong> de recherche pour les filtres sélectionnés.`; 
         }
     }
-    noResultsSearch(pExpression){
-        this.logger.innerHTML = `Aucune recette ne correspond à <strong> ${pExpression} </strong>.`; 
+
+    static noResultsSearch(pExpression){
+        const logger = document.querySelector(".message_alert");
+        logger.innerHTML = `Aucune recette ne correspond à <strong> ${pExpression} </strong>.`; 
     }
-    noResultsFilter(){
-        this.logger.innerHTML = `Aucune recette ne correspond à votre recherche.`; 
+
+    static noResultsFilter(){
+        const logger = document.querySelector(".message_alert");
+        logger.innerHTML = `Aucune recette ne correspond à votre recherche.`; 
     }
+
 }
