@@ -49,15 +49,6 @@ function datasFilterUstensils(recipes){
 }
 
 
-// Une fois que l'on a récupéré les datas pour les 3 filtres, on peut les afficher en liste dans chacun des filtres
-const filterIngredients = document.getElementById("filter_ingredients");
-const filterAppliance = document.getElementById("filter_appliance");
-const filterUstensils = document.getElementById("filter_ustensils");
-// On va avoir besoin d'une petite fonction pour reformatter les textes (capitale, minuscules) dans la liste des critères des filtres
-function stringFirstLetterUppercase(string){
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
-}
-
 // On crée une fonction pour constuire la liste des filtres, en fonction des données du tableau de résultat, 
 // et du critère du filtre, ex : "ingredients"
 // datasFilterCriteria[] est un tableau de données, criteria est juste une string
