@@ -13,7 +13,8 @@ searchField.addEventListener('input', function (event) {
     // On supprime les filtres déjà sélectionnés (s'il y en a)
     removeAllSelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     // On génère les résultats (si plus de 3 caractères)
-    let inputValue = cleanInputValue(this.value); // expression
+    let inputValue = cleanInputValue(this.value, document.getElementById("search")); // expression
+ 
     let recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     // On met à jour les listes de filtres disponibles en fonction des résultats
     if(recipesResults.length > 0){
@@ -154,8 +155,9 @@ for(let i of filterDropDownFields){
 
 function searchInDropDown(field, listItems, listItemsWrapper){ //"search_ingredient", "filter_list_item--ingredients", "ingredients_list"
     let filterDropDownField = document.getElementById(field);
+    let filterDropDownFieldContainer = filterDropDownField.parentNode.parentNode;
     let filterSearchListItems = document.getElementsByClassName(listItems);
-    let filterSearchFieldValue = cleanInputValue(filterDropDownField.value);
+    let filterSearchFieldValue = cleanInputValue(filterDropDownField.value, filterDropDownFieldContainer);
     let filterListArray = [];
     for(let i of filterSearchListItems){
         filterListArray.push(i.textContent);
