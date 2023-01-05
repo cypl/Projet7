@@ -57,12 +57,12 @@ function generateFilterList(datasFilterCriteria, criteria){
     if(document.getElementById(criteria + "_list")){document.getElementById(criteria + "_list").remove();}
     // on construit le filtre
     const filterWrapper = document.getElementById("filter_" + criteria);
-    filterWrapper.append(new FilterItemsList(criteria).createFilterItemsList());
+    filterWrapper.append(new FilterItemsList(criteria).create());
     // on ajoute les différents items du filtre, en fonction des données du tableau
     let filterItemsData = datasFilterCriteria;
     for(let data of filterItemsData){
         const filterCriteriaList = document.getElementById(criteria + "_list");
-        filterCriteriaList.append(new FilterItem(data, criteria).createFilterItem());
+        filterCriteriaList.append(new FilterItem(data, criteria).create());
     }
 }
 
@@ -73,12 +73,12 @@ function updateFilterList(datasFilterCriteria, filtersSelectedCriteria, criteria
     if(document.getElementById(criteria + "_list")){document.getElementById(criteria + "_list").remove();}
     // on construit le filtre
     const filterWrapper = document.getElementById("filter_" + criteria);
-    filterWrapper.append(new FilterItemsList(criteria).createFilterItemsList());
+    filterWrapper.append(new FilterItemsList(criteria).create());
     // on ajoute les différents items du filtre, en fonction des données du tableau
     let filterItemsData = datasFilterCriteria;
     for(let data of filterItemsData){
         const filterCriteriaList = document.getElementById(criteria + "_list");
-        filterCriteriaList.append(new FilterItem(data, criteria).createFilterItemForUpdate(filtersSelectedCriteria));
+        filterCriteriaList.append(new FilterItem(data, criteria).create(filtersSelectedCriteria));
     }
 }
 function updateFiltersList(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
@@ -93,32 +93,6 @@ function updateFiltersList(recipes, filtersSelectedIngredients, filtersSelectedA
 let filtersSelectedIngredients = []
 let filtersSelectedAppliance = []
 let filtersSelectedUstensils = []
-
-
-// On crée un fonction pour afficher les éléments du filtre ingrédients
-function displayFilterIngredients(recipes){
-    generateFilterList(datasFilterIngredients(recipes), "ingredients");
-}
-
-
-// On crée un fonction pour afficher les éléments du filtre appareils
-function displayFilterUstensils(recipes){
-    generateFilterList(datasFilterAppliance(recipes), "appliance");
-}
-
-
-// On crée un fonction pour afficher les éléments du filtre ustensiles
-function displayFilterAppliance(recipes){
-    generateFilterList(datasFilterUstensils(recipes), "ustensils");
-}
-
-
-// On crée une fonction pour afficher les filtres
-function displayFilters(recipes){
-    displayFilterIngredients(recipes);
-    displayFilterAppliance(recipes);
-    displayFilterUstensils(recipes);
-}
 
 
 
@@ -141,6 +115,8 @@ function displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppli
         filtersSelectedWrapper.append(new SelectedFilter(ustensil, "selected_ustensil").createSelectedFilter());
     }
 }
+
+
 
 // On crée une fonction pour mettre à jour le filtre, lorsque l'on dé-sélectionne un filtre
 function updateFilter(filterItemSelected, filterItemsSelected, filtersSelectedType, filterListClassName){

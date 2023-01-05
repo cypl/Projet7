@@ -2,6 +2,7 @@ class Display{
 
 
     // Une méthode pour afficher les recettes
+    // pRecipes correspond à l'array des résultats de la recherche
     static recipes(pRecipes){
         const results = document.getElementById("results");
         // On supprime les résultats en cours
@@ -15,7 +16,10 @@ class Display{
     }
 
 
-    // Une méthode pour afficher le logger
+    // Une méthode pour afficher le logger (un message pour l'utilisateur en fonction des résultats)
+    // pInput correspond à la saisie dans la barre de recherche
+    // pRecipes correspond à l'array des résultats de la recherche
+    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
     static logger(pInput, pRecipes, pIngredients, pAppliance, pUstensils){
         // Si la recherche contient des filtres
         let hasFilters;
@@ -55,6 +59,15 @@ class Display{
     }
 
 
+    // Une méthode pour afficher les listes des tags dans les filtres
+    // pRecipes correspond à l'array des résultats de la recherche
+    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
+    // Cette méthode utilise la classe "Filters"
+    static filters(pRecipes, pIngredients, pAppliance, pUstensils){
+        Filters.generateList(Filters.dataIngredients(pRecipes), "ingredients", pIngredients);
+        Filters.generateList(Filters.datasAppliance(pRecipes), "appliance", pAppliance);
+        Filters.generateList(Filters.datasUtensils(pRecipes), "ustensils", pUstensils);
+    }
 
 
 }
