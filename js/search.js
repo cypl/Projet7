@@ -54,7 +54,7 @@ function findWithFilterUstensils(recipe, selectedIngredients){
 //On crée une fonction pour rechercher dans les recettes à partir des filtres
 function searchByFilters(recipesFromSearch, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
     const searchField = document.getElementById("search_main");
-    let inputValue = cleanInputValue(searchField.value);
+    let inputValue = cleanInputValue(searchField.value, document.getElementById("search"));
     recipesFromSearch = searchByText(inputValue);
     // On retire les recettes de recipesFromSearch[] qui ne correspondent pas aux filtres 
     // 1 - Filtres Ingrédients
