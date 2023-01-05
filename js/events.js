@@ -196,6 +196,7 @@ for(let f of filters){
     f.onclick = (event) => { 
         // Elément parent du filtre cliqué
         let filterClicked = event.target.parentNode;
+        console.log(filterClicked);
         // Les autres filtres se rétrécissent pour laisser de la place
         const filtersContainer = document.getElementsByClassName("filter_item");
         for(let fi of filtersContainer){
@@ -205,8 +206,8 @@ for(let f of filters){
         }
         // Le filtre cliqué s'ouvre
         filterClicked.classList.add("open");
-        filterClicked.childNodes[3].style.display = "none"; // label P
-        filterClicked.childNodes[5].childNodes[3].style.display = "block"; // input
+        filterClicked.querySelector(".filter_item_label").style.display = "none";
+        filterClicked.querySelector(".filter_item_form__input").style.display = "block";
         //Fermer le filtre
         filterClicked.addEventListener("mouseleave", function( event ) {
             for(let fi of filtersContainer){
@@ -215,8 +216,8 @@ for(let f of filters){
                 }
             }
             filterClicked.classList.remove("open");
-            filterClicked.childNodes[3].style.display = "block"; // label P
-            filterClicked.childNodes[5].childNodes[3].style.display = "none"; // input
+            filterClicked.querySelector(".filter_item_label").style.display = "block";
+            filterClicked.querySelector(".filter_item_form__input").style.display = "none";
         });
     };
 }

@@ -128,7 +128,7 @@ ul{
 
 /* Tooltips */
 .message-error-expression__wrapper{
-    background-color: rgba(00, 00, 00, 0.5);
+    background-color: rgba(00, 00, 00, 0.6);
     color: #fff;
     padding: 0.4rem 1rem;
     margin-bottom: 0.8rem;
