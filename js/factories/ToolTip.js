@@ -29,11 +29,13 @@ class ToolTip{
 
     static hide(pContainer){
         const toolTipWrapper = pContainer.querySelector(".message-error-expression__wrapper");
-        toolTipWrapper.classList.remove("popIn");
-        toolTipWrapper.classList.add("popOut");
-        setTimeout(function(){
-            toolTipWrapper.style.display = "none";
-        }, 250); // 250ms correspond à la durée de l'annimation "popOut"
+        if(toolTipWrapper){
+            toolTipWrapper.classList.remove("popIn");
+            toolTipWrapper.classList.add("popOut");
+            setTimeout(function(){
+                toolTipWrapper.style.display = "none";
+            }, 250); // 250ms correspond à la durée de l'annimation "popOut"
+        }
     }
 
 }

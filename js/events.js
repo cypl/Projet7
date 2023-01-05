@@ -58,7 +58,7 @@ function addFilterHandler(event){
     displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
     // On génère les résultats (tableau)
     const searchField = document.getElementById("search_main");
-    let inputValue = cleanInputValue(searchField.value);
+    let inputValue = cleanInputValue(searchField.value, document.getElementById("search")); // expression
     let recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
     // On met à jour les listes de filtres disponibles en fonction des résultats
     setTimeout(function(){
@@ -114,7 +114,7 @@ function removeFilterHandler(event){
         }
         // On régénère les résultats de la recherche, et on affiche les recettes correspondantes
         const searchField = document.getElementById("search_main");
-        let inputValue = cleanInputValue(searchField.value);
+        let inputValue = cleanInputValue(searchField.value, document.getElementById("search")); // expression
         const recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
         // On met à jour les listes de filtres disponibles en fonction des résultats
         setTimeout(function(){
@@ -196,7 +196,6 @@ for(let f of filters){
     f.onclick = (event) => { 
         // Elément parent du filtre cliqué
         let filterClicked = event.target.parentNode;
-        console.log(filterClicked);
         // Les autres filtres se rétrécissent pour laisser de la place
         const filtersContainer = document.getElementsByClassName("filter_item");
         for(let fi of filtersContainer){

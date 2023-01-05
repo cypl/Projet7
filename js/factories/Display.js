@@ -16,7 +16,7 @@ class Display{
 
 
     // Une méthode pour afficher le logger
-    static logger(inputValue, recipesArray, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
+    static logger(inputValue, pRecipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils){
         // Si la recherche contient des filtres
         let searchHasFilters;
         if(filtersSelectedIngredients.length > 0 || filtersSelectedAppliance.length > 0 || filtersSelectedUstensils.length > 0){
@@ -30,24 +30,23 @@ class Display{
         }
         // si la recherche est valable et qu'il n'y a pas de filtres
         if(inputValue.length >= 3 && !searchHasFilters){
-            if(recipesArray.length > 0){
-                Logger.successfulSearch(inputValue, recipesArray);
+            if(pRecipes.length > 0){
+                Logger.successfulSearch(inputValue, pRecipes);
             } else {
                 Logger.noResultsSearch(inputValue);
             }
         }
         // si la recherche est valable et qu'il y a des filtres
         if(inputValue.length >= 3 && searchHasFilters){
-            if(recipesArray.length > 0){
-                Logger.successfulSearchAndFilter(inputValue, recipesArray);
+            if(pRecipes.length > 0){
+                Logger.successfulSearchAndFilter(inputValue, pRecipes);
             } else {
                 Logger.noResultsSearch(inputValue);
             }
         }
         // si la recherche est vide et qu'il y a des filtres
         if(!inputValue.length && searchHasFilters){
-            Logger.successfulFilter(recipesArray);
-
+            Logger.successfulFilter(pRecipes);
         }
         // si la recherche est vide et qu'il y a des filtres
         if(!inputValue.length && !searchHasFilters){
