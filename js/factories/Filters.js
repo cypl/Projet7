@@ -58,17 +58,44 @@ class Filters{
     // pData correspond aux data récupérées par l'une des 3 méthodes dataIngredients(), datasAppliance(), datasUtensils()
     // pCriteria correspond à une string : "ingredients", "appliance", "ustensils"
     // pSelectedTags correspond à un des 3 arrays de tags sélectionnés
+    // static generateList(pData, pCriteria, pSelectedTags){
+    //     // on supprime les éléments qui pourrait rester d'un chargement précédent
+    //     if(document.getElementById(pCriteria + "_list")){document.getElementById(pCriteria + "_list").remove();}
+    //     // on construit le filtre
+    //     const filterWrapper = document.getElementById("filter_" + pCriteria);
+    //     filterWrapper.append(new FilterItemsList(pCriteria).create());
+    //     // on ajoute les différents items du filtre, en fonction des données de pData
+    //     let filterItemsData = pData;
+    //     for(let data of filterItemsData){
+    //         const filterCriteriaList = document.getElementById(pCriteria + "_list");
+    //         filterCriteriaList.append(new FilterItem(data, pCriteria).create(pSelectedTags));
+    //     }
+    // }
+
     static generateList(pData, pCriteria, pSelectedTags){
         // on supprime les éléments qui pourrait rester d'un chargement précédent
         if(document.getElementById(pCriteria + "_list")){document.getElementById(pCriteria + "_list").remove();}
-        // on construit le filtre
+        // on construit la liste du filtre
         const filterWrapper = document.getElementById("filter_" + pCriteria);
-        filterWrapper.append(new FilterItemsList(pCriteria).create());
-        // on ajoute les différents items du filtre, en fonction des données de pData
-        let filterItemsData = pData;
-        for(let data of filterItemsData){
+        const filterCriteriaList = document.createElement("ul");
+        filterCriteriaList.setAttribute("id", pCriteria+ "_list");
+        filterCriteriaList.classList.add("filter_list");
+        filterWrapper.append(filterCriteriaList);
+        // on ajoute les différents tag du filtre dans la liste, en fonction des données de pData
+        for(let i of pData){
             const filterCriteriaList = document.getElementById(pCriteria + "_list");
-            filterCriteriaList.append(new FilterItem(data, pCriteria).create(pSelectedTags));
+            let filterItem = document.createElement("li");
+            filterItem.classList.add("ingredient_item");
+            filterItem.classList.add("filter_list_item");
+            filterItem.classList.add("filter_list_item--" + pCriteria);
+            filterItem.textContent = stringFirstLetterUppercase(i);
+            // Si certains tags ont déjà été sélectionnés, ils sont dans l'array pSelectedTags
+            if(pSelectedTags.length > 0){
+                if(pSelectedTags.includes(filterItem.textContent)){
+                    filterItem.classList.add("selected_filter");
+                }
+            }
+            filterCriteriaList.append(filterItem);
         }
     }
 
