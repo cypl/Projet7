@@ -22,7 +22,7 @@ class Filters{
 
     // Une méthode pour récupérer la liste des appareils, en fonction des résultats de recettes
     // pRecipes correspond à l'array des résultats de la recherche
-    static datasAppliance(pRecipes){
+    static dataAppliance(pRecipes){
         let datasAppliance = [];
         for(let recipe of pRecipes){
             datasAppliance.push(recipe.appliance);
@@ -37,7 +37,7 @@ class Filters{
 
     // Une méthode pour récupérer la liste des ustensiles, en fonction des résultats de recettes
     // pRecipes correspond à l'array des résultats de la recherche
-    static datasUtensils(pRecipes){
+    static dataUtensils(pRecipes){
         let datasUtensils = [];
         for(let recipe of pRecipes){
             let listUtensils = recipe.ustensils;
@@ -58,20 +58,6 @@ class Filters{
     // pData correspond aux data récupérées par l'une des 3 méthodes dataIngredients(), datasAppliance(), datasUtensils()
     // pCriteria correspond à une string : "ingredients", "appliance", "ustensils"
     // pSelectedTags correspond à un des 3 arrays de tags sélectionnés
-    // static generateList(pData, pCriteria, pSelectedTags){
-    //     // on supprime les éléments qui pourrait rester d'un chargement précédent
-    //     if(document.getElementById(pCriteria + "_list")){document.getElementById(pCriteria + "_list").remove();}
-    //     // on construit le filtre
-    //     const filterWrapper = document.getElementById("filter_" + pCriteria);
-    //     filterWrapper.append(new FilterItemsList(pCriteria).create());
-    //     // on ajoute les différents items du filtre, en fonction des données de pData
-    //     let filterItemsData = pData;
-    //     for(let data of filterItemsData){
-    //         const filterCriteriaList = document.getElementById(pCriteria + "_list");
-    //         filterCriteriaList.append(new FilterItem(data, pCriteria).create(pSelectedTags));
-    //     }
-    // }
-
     static generateList(pData, pCriteria, pSelectedTags){
         // on supprime les éléments qui pourrait rester d'un chargement précédent
         if(document.getElementById(pCriteria + "_list")){document.getElementById(pCriteria + "_list").remove();}
@@ -97,6 +83,40 @@ class Filters{
             }
             filterCriteriaList.append(filterItem);
         }
+    }
+
+    
+    // Une méthode pour mettre à jour les arrays de tags sélectionnés, quand on en supprime un
+    // pTag correspond au tag qui a été cliqué, et que l'on souhaite retirer
+    // pSeletedTagsElem correspond à une collection d'éléments
+    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
+    static updateSelections(pTag, pSelectedTagsElem, pIngredients, pAppliance, pUstensils){
+        // S'il ne reste qu'un élément dans les filtres sélectionnés, on supprime le conteneur
+        if(pSelectedTagsElem.length == 1){document.getElementById("filters_selected_list").remove();}
+        if(pTag.classList.contains("selected_ingredient")){
+            let ingredientsUpdated = pIngredients.filter(item => !item.includes(pTag.textContent));
+            pIngredients.length = 0;
+            for(let f of ingredientsUpdated){pIngredients.push(f);}
+        }
+        if(pTag.classList.contains("selected_appliance")){
+            let applianceUpdated = pAppliance.filter(item => !item.includes(pTag.textContent));
+            pAppliance.length = 0;
+            for(let f of applianceUpdated){pAppliance.push(f);}
+        }
+        if(pTag.classList.contains("selected_ustensil")){
+            let ustensilsUpdated = pUstensils.filter(item => !item.includes(pTag.textContent));
+            pUstensils.length = 0;
+            for(let f of ustensilsUpdated){pUstensils.push(f);}
+        }
+    }
+
+    // Une méthode pour vider toutes les listes de tags sélectionnés
+    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
+    static removeAll(pIngredients, pAppliance, pUstensils){
+        pIngredients.length = 0;
+        pAppliance.length = 0;
+        pUstensils.length = 0;
+        Display.selectedTags(pIngredients, pAppliance, pUstensils);
     }
 
 

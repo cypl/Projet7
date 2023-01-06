@@ -3,6 +3,7 @@ class Display{
 
     // Une méthode pour afficher les recettes
     // pRecipes correspond à l'array des résultats de la recherche
+    // Cette méthode fait appel à la classe RecipeCard
     static recipes(pRecipes){
         const results = document.getElementById("results");
         // On supprime les résultats en cours
@@ -20,6 +21,7 @@ class Display{
     // pInput correspond à la saisie dans la barre de recherche
     // pRecipes correspond à l'array des résultats de la recherche
     // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
+    // Cette méthode fait appel à la classe Logger
     static logger(pInput, pRecipes, pIngredients, pAppliance, pUstensils){
         // Si la recherche contient des filtres
         let hasFilters;
@@ -62,11 +64,33 @@ class Display{
     // Une méthode pour afficher les listes des tags dans les filtres
     // pRecipes correspond à l'array des résultats de la recherche
     // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
-    // Cette méthode utilise la classe "Filters"
+    // Cette méthode Fait appel à la classe "Filters"
     static filters(pRecipes, pIngredients, pAppliance, pUstensils){
         Filters.generateList(Filters.dataIngredients(pRecipes), "ingredients", pIngredients);
-        Filters.generateList(Filters.datasAppliance(pRecipes), "appliance", pAppliance);
-        Filters.generateList(Filters.datasUtensils(pRecipes), "ustensils", pUstensils);
+        Filters.generateList(Filters.dataAppliance(pRecipes), "appliance", pAppliance);
+        Filters.generateList(Filters.dataUtensils(pRecipes), "ustensils", pUstensils);
+    }
+
+
+    // Une méthode pour afficher les listes des tags sélectionnés sous la barre de recherche
+    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
+    static selectedTags(pIngredients, pAppliance, pUstensils){
+        if(document.getElementById("filters_selected_list")){
+            document.getElementById("filters_selected_list").remove();
+        }
+        const filtersWrapper = document.getElementById("filters");
+        const filtersSelectedWrapper = document.createElement("ul");
+        filtersSelectedWrapper.setAttribute("id","filters_selected_list");
+        filtersWrapper.prepend(filtersSelectedWrapper);
+        for(let ingredient of pIngredients){
+            filtersSelectedWrapper.append(new SelectedFilter(ingredient, "selected_ingredient").create());
+        }
+        for(let appliance of pAppliance){
+            filtersSelectedWrapper.append(new SelectedFilter(appliance, "selected_appliance").create());
+        }
+        for(let ustensil of pUstensils){
+            filtersSelectedWrapper.append(new SelectedFilter(ustensil, "selected_ustensil").create());
+        }
     }
 
 

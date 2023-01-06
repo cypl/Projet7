@@ -3,7 +3,7 @@ class SelectedFilter{
         this.name = name;
         this.classname = classname;
     }
-    createSelectedFilter(){
+    create(){
         let filtersSelectedItem = document.createElement("li");
         filtersSelectedItem.classList.add("filter_item_selected");
         filtersSelectedItem.classList.add(this.classname);

@@ -1,3 +1,9 @@
+// On crée 3 tableaux, qui vont stocker les filtres sélectionnés
+let filtersSelectedIngredients = []
+let filtersSelectedAppliance = []
+let filtersSelectedUstensils = []
+
+
 // On crée une fonction pour chaque test de la fonction searchByText();
 function findInTitle(inputValue, title){
     return title.toLowerCase().includes(inputValue);

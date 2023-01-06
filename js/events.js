@@ -10,27 +10,20 @@ function initEventsListeners(){
 const searchField = document.getElementById("search_main");
 searchField.value = "";
 searchField.addEventListener('input', function (event) {
-    // On supprime les filtres déjà sélectionnés (s'il y en a)
-    removeAllSelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-    
+    // On supprime les tags déjà sélectionnés
+    Filters.removeAll(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     // On génère les résultats (si plus de 3 caractères)
-    let inputValue = cleanInputValue(this.value, document.getElementById("search")); // expression
- 
-    
+    let inputValue = cleanInputValue(this.value, document.getElementById("search")); // expression 
     let recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-    
-    
     // On met à jour les listes de filtres disponibles en fonction des résultats
     if(recipesResults.length > 0){
-        updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        Display.filters(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     } else {
-        updateFiltersList(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        Display.filters(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     }
-    
-    
     const filtersItems = document.getElementsByClassName("filter_list_item");
     for(let filtersItem of filtersItems){
-        filtersItem.addEventListener('click', addFilterHandler);
+        filtersItem.addEventListener('click', addTagHandler);
     }
     // On génère les fiches liées aux résultats
     Display.recipes(recipesResults);
@@ -48,7 +41,7 @@ searchField.addEventListener('input', function (event) {
 // On affiche le message en conséquence du résultat
 // On donne la possibilité de déselectionner un filtre 
 
-function addFilterHandler(event){
+function addTagHandler(event){
     event.target.classList.add("selected_filter");
     // On ajoute l'élément cliqué au tableau correspondant : filtersSelectedIngredients[],…
     if(event.target.classList.contains("filter_list_item--ingredients")){
@@ -61,7 +54,7 @@ function addFilterHandler(event){
         filtersSelectedUstensils.push(this.textContent);
     }
     // On ajoute le filtre sélectionné sous la barre de recherche
-    displaySelectedFilters(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
+    Display.selectedTags(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
     // On génère les résultats (tableau)
     const searchField = document.getElementById("search_main");
     let inputValue = cleanInputValue(searchField.value, document.getElementById("search")); // expression
@@ -69,12 +62,11 @@ function addFilterHandler(event){
     // On met à jour les listes de filtres disponibles en fonction des résultats
     setTimeout(function(){
         Display.filters(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-        //updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
         const filtersItems = document.getElementsByClassName("filter_list_item");
         for(let filtersItem of filtersItems){
-            filtersItem.addEventListener('click', addFilterHandler);
+            filtersItem.addEventListener('click', addTagHandler);
         }
-    }, 700);
+    }, 700); // 700ms permettent de voir l'animation CSS, et de comprendre qu'il y a une mise à jour de la liste de tags dans le filtre
     // On génère les fiches liées aux résultats
     Display.recipes(recipesResults);
     // On affiche le logger en conséquence du résultat
@@ -83,7 +75,7 @@ function addFilterHandler(event){
     const filtersSelectedItems = document.getElementsByClassName("filter_item_selected");
     if(filtersSelectedItems){
         for(let filtersSelectedItem of filtersSelectedItems){
-            filtersSelectedItem.addEventListener('click', removeFilterHandler);
+            filtersSelectedItem.addEventListener('click', removeTagHandler);
         }
     }
 
@@ -92,7 +84,7 @@ function addFilterHandler(event){
 const filtersItems = document.getElementsByClassName("filter_list_item");
 if(filtersItems){
     for(let filtersItem of filtersItems){
-        filtersItem.addEventListener('click', addFilterHandler);
+        filtersItem.addEventListener('click', addTagHandler);
     }    
 }
 
@@ -105,20 +97,15 @@ if(filtersItems){
 // On génère les fiches liées aux résultats
 // On affiche le message en conséquence du résultat
 
-function removeFilterHandler(event){
+function removeTagHandler(event){
     // On retire le filtre sélectionné sous la barre de recherche
     // le clic sur un filtre sélectionné déclenche la fonction updateFilter();
     const filtersSelectedItems = document.getElementsByClassName("filter_item_selected");
     if(filtersSelectedItems){
-        if(event.target.classList.contains("selected_ingredient")){
-            updateFilter(event.target, filtersSelectedItems, filtersSelectedIngredients, "filter_list_item--ingredients");
-        }
-        if(event.target.classList.contains("selected_appliance")){
-            updateFilter(event.target, filtersSelectedItems, filtersSelectedAppliance, "filter_list_item--appliance");
-        }
-        if(event.target.classList.contains("selected_ustensil")){
-            updateFilter(event.target, filtersSelectedItems, filtersSelectedUstensils, "filter_list_item--ustensils");
-        }
+        // On met à jour les arrays de tags sélectionnés
+        Filters.updateSelections(event.target, filtersSelectedItems, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
+        // On supprime l'élément cliqué
+        event.target.remove();
         // On régénère les résultats de la recherche, et on affiche les recettes correspondantes
         const searchField = document.getElementById("search_main");
         let inputValue = cleanInputValue(searchField.value, document.getElementById("search")); // expression
@@ -127,16 +114,14 @@ function removeFilterHandler(event){
         setTimeout(function(){
             if(recipesResults.length > 0){
                 Display.filters(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-                //updateFiltersList(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
             } else {
                 Display.filters(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
-                //updateFiltersList(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
             }
             const filtersItems = document.getElementsByClassName("filter_list_item");
             for(let filtersItem of filtersItems){
-                filtersItem.addEventListener('click', addFilterHandler);
+                filtersItem.addEventListener('click', addTagHandler);
             }
-        }, 700);
+        }, 700); // 700ms permettent de voir l'animation CSS, et de comprendre qu'il y a une mise à jour de la liste de tags dans le filtre
         // On génère les fiches liées aux résultats
         Display.recipes(recipesResults);
         // On affiche le logger en conséquence du résultat
