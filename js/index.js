@@ -5,12 +5,9 @@
 // On initialise les évenèments dans la page, une fois que les éléments sont en place.
 
 function onInitialPageLoad(){
-    let filtersSelectedIngredients = [];
-    let filtersSelectedAppliance = [];
-    let filtersSelectedUstensils = [];
     Logger.init();
     Logger.beforeSearch(recipes);
-    Display.filters(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    Display.filters(recipes, selectedIngredients, selectedAppliance, selectedUstensils);
     Display.recipes(recipes);
     initEventsListeners();
 }

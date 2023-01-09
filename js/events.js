@@ -11,15 +11,15 @@ const searchField = document.getElementById("search_main");
 searchField.value = "";
 searchField.addEventListener('input', function (event) {
     // On supprime les tags déjà sélectionnés
-    Filters.removeAll(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    Filters.removeAll(selectedIngredients, selectedAppliance, selectedUstensils);
     // On génère les résultats (si plus de 3 caractères)
     let inputValue = cleanInputValue(this.value, document.getElementById("search")); // expression 
-    let recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    let recipesResults = generateRecipesResults(inputValue, selectedIngredients, selectedAppliance, selectedUstensils);
     // On met à jour les listes de filtres disponibles en fonction des résultats
     if(recipesResults.length > 0){
-        Display.filters(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        Display.filters(recipesResults, selectedIngredients, selectedAppliance, selectedUstensils);
     } else {
-        Display.filters(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        Display.filters(recipes, selectedIngredients, selectedAppliance, selectedUstensils);
     }
     const filtersItems = document.getElementsByClassName("filter_list_item");
     for(let filtersItem of filtersItems){
@@ -28,7 +28,7 @@ searchField.addEventListener('input', function (event) {
     // On génère les fiches liées aux résultats
     Display.recipes(recipesResults);
     // On affiche le logger en conséquence du résultat
-    Display.logger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    Display.logger(inputValue, recipesResults, selectedIngredients, selectedAppliance, selectedUstensils);
 });
 
 
@@ -43,25 +43,25 @@ searchField.addEventListener('input', function (event) {
 
 function addTagHandler(event){
     event.target.classList.add("selected_filter");
-    // On ajoute l'élément cliqué au tableau correspondant : filtersSelectedIngredients[],…
+    // On ajoute l'élément cliqué au tableau correspondant : selectedIngredients[],…
     if(event.target.classList.contains("filter_list_item--ingredients")){
-        filtersSelectedIngredients.push(this.textContent);
+        selectedIngredients.push(this.textContent);
     }
     if(event.target.classList.contains("filter_list_item--appliance")){
-        filtersSelectedAppliance.push(this.textContent);
+        selectedAppliance.push(this.textContent);
     }
     if(event.target.classList.contains("filter_list_item--ustensils")){
-        filtersSelectedUstensils.push(this.textContent);
+        selectedUstensils.push(this.textContent);
     }
     // On ajoute le filtre sélectionné sous la barre de recherche
-    Display.selectedTags(filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    Display.selectedTags(selectedIngredients, selectedAppliance, selectedUstensils);
     // On génère les résultats (tableau)
     const searchField = document.getElementById("search_main");
     let inputValue = cleanInputValue(searchField.value, document.getElementById("search")); // expression
-    let recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
+    let recipesResults = generateRecipesResults(inputValue, selectedIngredients, selectedAppliance, selectedUstensils)
     // On met à jour les listes de filtres disponibles en fonction des résultats
     setTimeout(function(){
-        Display.filters(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        Display.filters(recipesResults, selectedIngredients, selectedAppliance, selectedUstensils);
         const filtersItems = document.getElementsByClassName("filter_list_item");
         for(let filtersItem of filtersItems){
             filtersItem.addEventListener('click', addTagHandler);
@@ -70,7 +70,7 @@ function addTagHandler(event){
     // On génère les fiches liées aux résultats
     Display.recipes(recipesResults);
     // On affiche le logger en conséquence du résultat
-    Display.logger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+    Display.logger(inputValue, recipesResults, selectedIngredients, selectedAppliance, selectedUstensils);
     // On donne la possibilité de déselectionner un filtre 
     const filtersSelectedItems = document.getElementsByClassName("filter_item_selected");
     if(filtersSelectedItems){
@@ -103,19 +103,19 @@ function removeTagHandler(event){
     const filtersSelectedItems = document.getElementsByClassName("filter_item_selected");
     if(filtersSelectedItems){
         // On met à jour les arrays de tags sélectionnés
-        Filters.updateSelections(event.target, filtersSelectedItems, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils)
+        Filters.updateSelections(event.target, filtersSelectedItems, selectedIngredients, selectedAppliance, selectedUstensils)
         // On supprime l'élément cliqué
         event.target.remove();
         // On régénère les résultats de la recherche, et on affiche les recettes correspondantes
         const searchField = document.getElementById("search_main");
         let inputValue = cleanInputValue(searchField.value, document.getElementById("search")); // expression
-        const recipesResults = generateRecipesResults(inputValue, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        const recipesResults = generateRecipesResults(inputValue, selectedIngredients, selectedAppliance, selectedUstensils);
         // On met à jour les listes de filtres disponibles en fonction des résultats
         setTimeout(function(){
             if(recipesResults.length > 0){
-                Display.filters(recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+                Display.filters(recipesResults, selectedIngredients, selectedAppliance, selectedUstensils);
             } else {
-                Display.filters(recipes, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+                Display.filters(recipes, selectedIngredients, selectedAppliance, selectedUstensils);
             }
             const filtersItems = document.getElementsByClassName("filter_list_item");
             for(let filtersItem of filtersItems){
@@ -125,7 +125,7 @@ function removeTagHandler(event){
         // On génère les fiches liées aux résultats
         Display.recipes(recipesResults);
         // On affiche le logger en conséquence du résultat
-        Display.logger(inputValue, recipesResults, filtersSelectedIngredients, filtersSelectedAppliance, filtersSelectedUstensils);
+        Display.logger(inputValue, recipesResults, selectedIngredients, selectedAppliance, selectedUstensils);
     }
 }
 
