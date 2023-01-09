@@ -12,7 +12,7 @@ class Display{
             for(let i of recipesCard){i.classList.add("fadeOut");}
             setTimeout(function(){
                 results.innerHTML = "";
-            }, 100); // 250ms correspond à la durée de l'animation "fadeOut"
+            }, 100); // 100ms correspond à la durée de l'animation "fadeOut"
         } 
         // Dans le cas où la recherche ne donne rien, on affiche la liste complète des recettes par défaut
         if(pRecipes.length == 0){pRecipes = recipes;}
@@ -22,7 +22,7 @@ class Display{
                 new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).create();
                 const recipesCard = results.querySelectorAll("article");
                 for(let i of recipesCard){i.classList.add("fadeIn");}
-            }, 100); // 250ms correspond à la durée de l'animation "fadeOut"
+            }, 100); // 100ms correspond à la durée de l'animation "fadeOut"
         }
         
     }
