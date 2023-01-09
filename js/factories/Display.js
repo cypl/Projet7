@@ -7,13 +7,24 @@ class Display{
     static recipes(pRecipes){
         const results = document.getElementById("results");
         // On supprime les résultats en cours
-        if(results.querySelector("article")){results.innerHTML = "";} 
+        if(results.querySelector("article")){
+            const recipesCard = results.querySelectorAll("article");
+            for(let i of recipesCard){i.classList.add("fadeOut");}
+            setTimeout(function(){
+                results.innerHTML = "";
+            }, 100); // 250ms correspond à la durée de l'animation "fadeOut"
+        } 
         // Dans le cas où la recherche ne donne rien, on affiche la liste complète des recettes par défaut
         if(pRecipes.length == 0){pRecipes = recipes;}
         // Sinon on affiche les résultats correspondants
         for(let recipe of pRecipes){
-            new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).create();
+            setTimeout(function(){
+                new RecipeCard(recipe.name,recipe.time,recipe.ingredients,recipe.description).create();
+                const recipesCard = results.querySelectorAll("article");
+                for(let i of recipesCard){i.classList.add("fadeIn");}
+            }, 100); // 250ms correspond à la durée de l'animation "fadeOut"
         }
+        
     }
 
 

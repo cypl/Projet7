@@ -204,6 +204,7 @@ ul{
     background-color: #E7E7E7;
     border-radius: 5px;
     overflow: hidden;
+    opacity:0;
 }
 .recipe__image{
     background-color: #C7BEBE;
@@ -487,3 +488,39 @@ ul{
     background-size: contain;
 }
 
+
+.fadeIn{
+    animation-duration: 0.1s; /* durée de l'animation */
+    animation-timing-function: ease-in-out; /* type de easing */
+    animation-iteration-count: 1; /* nombre de fois où l'animation est jouée */
+    animation-delay: 0s;
+    animation-name: fadeIn; /* appel keyframes */
+    animation-fill-mode: forwards;
+    animation-direction: normal;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeOut{
+    animation-duration: 0.1s; /* durée de l'animation */
+    animation-timing-function: ease-in-out; /* type de easing */
+    animation-iteration-count: 1; /* nombre de fois où l'animation est jouée */
+    animation-delay: 0s;
+    animation-name: fadeOut; /* appel keyframes */
+    animation-fill-mode: forwards;
+    animation-direction: normal;
+}
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

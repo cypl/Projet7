@@ -34,7 +34,7 @@ class ToolTip{
             toolTipWrapper.classList.add("popOut");
             setTimeout(function(){
                 toolTipWrapper.style.display = "none";
-            }, 250); // 250ms correspond à la durée de l'annimation "popOut"
+            }, 250); // 250ms correspond à la durée de l'animation "popOut"
         }
     }
 
