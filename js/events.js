@@ -146,12 +146,16 @@ for(let i of filterDropDownFields){
     });
 }
 
-
-function searchInDropDown(field, listItems, listItemsWrapper){ //"search_ingredient", "filter_list_item--ingredients", "ingredients_list"
+// On crée un fonction pour rechercher dans le dropdown d'un filtre
+function searchInDropDown(field, listItems, listItemsWrapper){ 
+    // field correspond à l'ID du champ (ex : "search_ingredient)
+    // listItems correspond à la classe CSS des éléments de la liste de filtre (ex : "filter_list_item--ingredients)
+    // listItemsWrapper correspond à l'ID du conteneur des éléments de la liste de filtre
     let filterDropDownField = document.getElementById(field);
     let filterDropDownFieldContainer = filterDropDownField.parentNode.parentNode;
     let filterSearchListItems = document.getElementsByClassName(listItems);
     let filterSearchFieldValue = cleanInputValue(filterDropDownField.value, filterDropDownFieldContainer);
+    
     let filterListArray = [];
     for(let i of filterSearchListItems){
         filterListArray.push(i.textContent);
@@ -164,6 +168,7 @@ function searchInDropDown(field, listItems, listItemsWrapper){ //"search_ingredi
             i.style.display = 'none';
         }
     }
+
     // Aucun résultat
     if(!filterListArrayResult.length){
         if(!document.getElementById("no_result_filter_" + listItemsWrapper)){

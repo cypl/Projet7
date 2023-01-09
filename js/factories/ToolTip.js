@@ -1,5 +1,4 @@
 class ToolTip{
-
     
     static show(pContainer, pMessage){
         // Si le tooltip n'existe pas encore dans le DOM on le crée

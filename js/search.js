@@ -51,17 +51,17 @@ function findWithFilterIngredients(recipe, selectedIngredients){
         }
     });
 }
-function findWithFilterAppliance(recipe, selectedIngredients){
-    return selectedIngredients.find(appliance => {
-        if(selectedIngredients.includes(recipe.appliance.toLowerCase())){ 
+function findWithFilterAppliance(recipe, selectedAppliance){
+    return selectedAppliance.find(appliance => {
+        if(selectedAppliance.includes(recipe.appliance.toLowerCase())){ 
             return true;
         }
     });
 }
-function findWithFilterUstensils(recipe, selectedIngredients){
+function findWithFilterUstensils(recipe, selectedUstensils){
     let recipeUstensilsLowerCase = recipe.ustensils.map(ust => { return ust.toLowerCase() });
     return recipeUstensilsLowerCase.find(ust => {
-        if(selectedIngredients.includes(ust)){ return true;}
+        if(selectedUstensils.includes(ust)){ return true;}
     });
 }
 
@@ -75,14 +75,15 @@ function searchByFilters(recipesFromSearch, selectedIngredients, selectedApplian
     // 2 - Appareils en bas de casse    
     const selectedApplianceLowerCase = selectedAppliance.map(appliance => { return appliance.toLowerCase() });
     // 3 - Ustensiles en bas de casse
-    const filtersSelectedUstensilsLowerCase = selectedUstensils.map(ustensil => { return ustensil.toLowerCase() });
+    const selectedUstensilsLowerCase = selectedUstensils.map(ustensil => { return ustensil.toLowerCase() });
     const recipesFromFilters = recipesFromSearch.filter(recipe => {
         if (
             findWithFilterIngredients(recipe, selectedIngredientsLowerCase)
             || findWithFilterAppliance(recipe, selectedApplianceLowerCase)
-            || findWithFilterUstensils(recipe, filtersSelectedUstensilsLowerCase)
+            || findWithFilterUstensils(recipe, selectedUstensilsLowerCase)
             ){return true;}
     });
+
     return recipesFromFilters;
 }
 
