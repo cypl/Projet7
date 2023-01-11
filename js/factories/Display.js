@@ -1,9 +1,11 @@
 class Display{
 
 
-    // Une méthode pour afficher les recettes
-    // pRecipes correspond à l'array des résultats de la recherche
-    // Cette méthode fait appel à la classe RecipeCard
+    /**
+     * Une méthode pour afficher les recettes
+     * Cette méthode fait appel à la classe RecipeCard
+     * @param {array} pRecipes // correspond à l'array des résultats de la recherche
+     */
     static recipes(pRecipes){
         const results = document.getElementById("results");
         // On supprime les résultats en cours
@@ -28,11 +30,15 @@ class Display{
     }
 
 
-    // Une méthode pour afficher le logger (un message pour l'utilisateur en fonction des résultats)
-    // pInput correspond à la saisie dans la barre de recherche
-    // pRecipes correspond à l'array des résultats de la recherche
-    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
-    // Cette méthode fait appel à la classe Logger
+    /**
+     * Une méthode pour afficher le logger (un message pour l'utilisateur en fonction des résultats)
+     * Cette méthode fait appel à la classe Logger
+     * @param {string} pInput correspond à la saisie dans la barre de recherche
+     * @param {array} pRecipes correspond à l'array des résultats de la recherche
+     * @param {array} pIngredients correspond à un array de tags sélectionnés
+     * @param {array} pAppliance correspond à un array de tags sélectionnés
+     * @param {array} pUstensils correspond à un array de tags sélectionnés
+     */
     static logger(pInput, pRecipes, pIngredients, pAppliance, pUstensils){
         // Si la recherche contient des filtres
         let hasFilters;
@@ -72,10 +78,14 @@ class Display{
     }
 
 
-    // Une méthode pour afficher les listes des tags dans les filtres
-    // pRecipes correspond à l'array des résultats de la recherche
-    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
-    // Cette méthode Fait appel à la classe "Filters"
+    /**
+     * Une méthode pour afficher les listes des tags dans les filtres
+     * Cette méthode fait appel à la classe "Filters"
+     * @param {array} pRecipes correspond à l'array des résultats de la recherche
+     * @param {array} pIngredients correspond à un array de tags sélectionnés
+     * @param {array} pAppliance correspond à un array de tags sélectionnés
+     * @param {array} pUstensils correspond à un array de tags sélectionnés
+     */
     static filters(pRecipes, pIngredients, pAppliance, pUstensils){
         Filters.generateList(Filters.dataIngredients(pRecipes), "ingredients", pIngredients);
         Filters.generateList(Filters.dataAppliance(pRecipes), "appliance", pAppliance);
@@ -83,8 +93,12 @@ class Display{
     }
 
 
-    // Une méthode pour afficher les listes des tags sélectionnés sous la barre de recherche
-    // pIngredients, pAppliance, pUstensils correspondent chacun à un des 3 arrays de tags sélectionnés
+    /**
+     * Une méthode pour afficher les listes des tags sélectionnés sous la barre de recherche
+     * @param {array} pIngredients correspond à un array de tags sélectionnés
+     * @param {array} pAppliance correspond à un array de tags sélectionnés
+     * @param {array} pUstensils correspond à un array de tags sélectionnés
+     */
     static selectedTags(pIngredients, pAppliance, pUstensils){
         if(document.getElementById("filters_selected_list")){
             document.getElementById("filters_selected_list").remove();
