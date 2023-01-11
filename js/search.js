@@ -68,7 +68,7 @@ let selectedUstensils = []
 
 
 /**
- * Fonction utilisée dans searchByFilters() pour comparer les tags présents dans la recette, avec ceux qui sont sélectionnés.
+ * Fonction utilisée par searchByFilters() pour comparer les tags présents dans la recette, avec ceux qui sont sélectionnés.
  * Si tous les tags sélectionnés sont inclus dans la recette, alors elle retourne "true".
  * @param {objet} recipe 
  * @param {*} recipeTags // Tableau d'objets, ou string, ou tableau
