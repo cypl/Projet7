@@ -22,6 +22,11 @@ function findInDescription(inputValue, description){
     return description.toLowerCase().includes(inputValue);
 }
 //On crée une fonction pour rechercher dans les recettes à partir d'une expression
+/**
+ * On crée une fonction pour rechercher dans les recettes à partir d'une expression
+ * @param {string} inputValue 
+ * @returns {Array}
+ */
 function searchByText(inputValue){
     let inputValueForTest = inputValue.toLowerCase();
     const recipesFromSearch = recipes.filter(recipe => {
@@ -43,26 +48,24 @@ let selectedAppliance = []
 let selectedUstensils = []
 
 // On crée une fonction pour chaque test de la fonction searchByFilters();
-function findWithFilterIngredients(recipe, selectedIngredients){
-    let recipeIngredientsLowerCase = recipe.ingredients.map(ing => { return ing.ingredient.toLowerCase() });
-    return recipeIngredientsLowerCase.find(ing => {
-        if(selectedIngredients.includes(ing)){ 
-            return true;
-        }
-    });
-}
-function findWithFilterAppliance(recipe, selectedAppliance){
-    return selectedAppliance.find(appliance => {
-        if(selectedAppliance.includes(recipe.appliance.toLowerCase())){ 
-            return true;
-        }
-    });
-}
-function findWithFilterUstensils(recipe, selectedUstensils){
-    let recipeUstensilsLowerCase = recipe.ustensils.map(ust => { return ust.toLowerCase() });
-    return recipeUstensilsLowerCase.find(ust => {
-        if(selectedUstensils.includes(ust)){ return true;}
-    });
+// Elle compare les tags présents dans la recette, avec ceux qui sont sélectionnés
+// Si tous les tags sélectionnés sont inclus dans la recette, alors elle retourne "true"
+function compareWithSelectedTags(recipe, recipeTags, selectedTags){
+    // Pour chaque recette, on fait un tableau avec uniquement les tags possibles de la recette
+    let recipeTagsLowerCase = [];
+    if(recipeTags == recipe.ingredients){ // ingredients
+        recipeTagsLowerCase = recipeTags.map(t => { return t.ingredient.toLowerCase() });
+    } else if (recipeTags == recipe.appliance){ // appliance
+        recipeTagsLowerCase.push(recipeTags.toLowerCase());
+    } else { // ustensils
+        recipeTagsLowerCase = recipeTags.map(t => { return t.toLowerCase() });
+    }
+    // On fait ensuite un tableau avec la liste des tags de la recette qui ne correspondent qu'à selectedTags
+    let selectedTagsInRecipe = selectedTags.filter(x => 
+        recipeTagsLowerCase.includes(x.toLowerCase())
+    );
+    // Si les ingrédients sélectionnés inclus dans une recette sont aussi nombreux que dans selectedTags, alors la recette correspond à tous les tags, et la condition est valide
+    if(selectedTagsInRecipe.length == selectedTags.length){return true};
 }
 
 //On crée une fonction pour rechercher dans les recettes à partir des filtres
@@ -78,9 +81,9 @@ function searchByFilters(recipesFromSearch, selectedIngredients, selectedApplian
     const selectedUstensilsLowerCase = selectedUstensils.map(ustensil => { return ustensil.toLowerCase() });
     const recipesFromFilters = recipesFromSearch.filter(recipe => {
         if (
-            findWithFilterIngredients(recipe, selectedIngredientsLowerCase)
-            || findWithFilterAppliance(recipe, selectedApplianceLowerCase)
-            || findWithFilterUstensils(recipe, selectedUstensilsLowerCase)
+            compareWithSelectedTags(recipe, recipe.ingredients, selectedIngredientsLowerCase)
+            && compareWithSelectedTags(recipe, recipe.appliance, selectedApplianceLowerCase)
+            && compareWithSelectedTags(recipe, recipe.ustensils, selectedUstensilsLowerCase)
             ){return true;}
     });
 

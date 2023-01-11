@@ -1,6 +1,7 @@
 class ToolTip{
     
     static show(pContainer, pMessage){
+        if(ToolTip.current){ToolTip.hide(ToolTip.current)}
         // Si le tooltip n'existe pas encore dans le DOM on le crée
         if(!pContainer.getElementsByClassName("message-error-expression__wrapper").length > 0){
             pContainer.style.position = "relative";
@@ -23,6 +24,7 @@ class ToolTip{
             toolTipWrapper.classList.add("popIn");
             toolTipWrapper.style.display = "block";
         }
+        ToolTip.current = pContainer;
     }
 
 
@@ -35,6 +37,7 @@ class ToolTip{
                 toolTipWrapper.style.display = "none";
             }, 250); // 250ms correspond à la durée de l'animation "popOut"
         }
+        ToolTip.current = null;
     }
 
 }
