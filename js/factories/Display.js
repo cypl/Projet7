@@ -1,3 +1,6 @@
+/**
+ * Une classe qui regroupe toutes les méthodes utilisées pour afficher des éléments
+ */
 class Display{
 
 
