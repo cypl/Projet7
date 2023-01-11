@@ -36,7 +36,7 @@ function findInIngredients(inputValue, ingredients){
  * Une fonction utilisée par searchByText() pour tester si la description de la recette contient l'expression saisie
  * @param {string} inputValue 
  * @param {string} description 
- * @returns {boolean} // si la description de la recette contient l'expression saisie
+ * @returns {boolean} si la description de la recette contient l'expression saisie
  */
 function findInDescription(inputValue, description){
     return description.toLowerCase().includes(inputValue);
@@ -46,7 +46,7 @@ function findInDescription(inputValue, description){
 /**
  * Fonction pour rechercher dans les recettes à partir d'une expression saisie
  * @param {string} inputValue 
- * @returns {array} // array de résultats de recettes
+ * @returns {array} array de résultats de recettes
  */
 function searchByText(inputValue){
     let inputValueForTest = inputValue.toLowerCase();
@@ -71,7 +71,7 @@ let selectedUstensils = []
  * Fonction utilisée par searchByFilters() pour comparer les tags présents dans la recette, avec ceux qui sont sélectionnés.
  * Si tous les tags sélectionnés sont inclus dans la recette, alors elle retourne "true".
  * @param {objet} recipe 
- * @param {*} recipeTags // Tableau d'objets, ou string, ou tableau
+ * @param {*} recipeTags array d'objets, ou string, ou array
  * @param {array} selectedTags 
  * @returns {boolean}
  */
